@@ -40,10 +40,8 @@ export default function Usersignin() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    name: "",
-    password: "",
-    phone: 0,
     email: "",
+    password: "",
   });
 
   const handleSubmit = async (e) => {
@@ -51,14 +49,12 @@ export default function Usersignin() {
 
     axios
       .post("http://localhost:4000/login", {
-        name: formData.name,
-        password: formData.password,
-        phone: formData.phone,
         email: formData.email,
+        password: formData.password,
       })
       .then((res) => {
-        // console.log(res);
-        localStorage.setItem("token", res);
+        console.log(res);
+        localStorage.setItem("token", res.data);
         navigate("/UserDashboard");
       })
       .catch((err) => console.log(err));
@@ -85,7 +81,7 @@ export default function Usersignin() {
             {/* <LockOutlinedIcon /> */}
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Sign In
           </Typography>
           <Box
             component="form"
@@ -119,14 +115,14 @@ export default function Usersignin() {
                   onChange={handleChange}
                 />
               </Grid>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <FormControlLabel
                   control={
                     <Checkbox value="allowExtraEmails" color="primary" />
                   }
                   label="I want to receive inspiration, marketing promotions and updates via email."
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
             <Button
               type="submit"
@@ -134,15 +130,8 @@ export default function Usersignin() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              Sign In
             </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="#" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
         <Copyright sx={{ mt: 5 }} />
