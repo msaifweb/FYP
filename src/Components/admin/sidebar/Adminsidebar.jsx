@@ -21,6 +21,14 @@ function Adminsidebar() {
                 </a>
               </li>
               {/* <Link to="/listing"> */}
+              <Link to="/addproduct">
+                <li>
+                  <a href="#" className="sidebarHeader">
+                    <i className="fas fa-tachometer-alt  " />
+                    Add Product
+                  </a>
+                </li>
+              </Link>
               <Link to="/listing">
                 <li>
                   <a href="#" className="sidebarHeader">

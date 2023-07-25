@@ -52,7 +52,7 @@ const Totalusers = () => {
 
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
-  console.log(data);
+  // console.log(data);
   // useEffect(() => {
   //   axios
   //     .get("http://localhost:4000/api/getallusers")
@@ -69,11 +69,13 @@ const Totalusers = () => {
     const fetchData = async () => {
       try {
         let jwt_token = localStorage.getItem("token") || null;
+        console.log(jwt_token);
         axios.defaults.headers.common["x-auth-token"] = jwt_token;
 
         const response = await axios.get(
           "http://localhost:4000/api/getallusers"
         );
+
         setData(response.data);
       } catch (error) {
         setError(error.message);

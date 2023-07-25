@@ -2,7 +2,6 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route, Link, Navigate } from "react-router-dom";
 import { useState } from "react";
 import jwt_decode from "jwt-decode";
-
 import LandingPage from "./Components/landingpage/LandingPage";
 import LoginPage from "./Components/login/LoginPage";
 import Booking from "./Components/booking/Booking";
@@ -45,21 +44,21 @@ function App() {
           <Route path="/addproduct" element={<Addproduct />} />
           <Route path="/listing" element={<Listing />} />
           {/* <Route path="/listing" element={<Listing />} /> */}
-          <Route path="signin" element={<LoginPage />} />
+          {/* <Route path="signin" element={<LoginPage />} /> */}
           {/* <Route path="adminsignup" element={<Adminsignup />} /> */}
           <Route path="UserDashboard" element={<UserDashboard />} />
           <Route path="usersignup" element={<Usersignup />} />
           <Route path="usersignin" element={<Usersignin />} />
 
-          <Route path="/" element={<Nav />} />
+          {/* <Route path="/" element={<Nav />} /> */}
           <Route path="billboard" element={<BillBoard />} />
           <Route path="booking" element={<Booking />} />
           <Route path="profile" element={<Profile />} />
           <Route path="AddProductPage" element={<AddProductPage />} />
           <Route path="Details" element={<Details />} />
-          <Route path="Modal" element={<Modal />} />
+          {/* <Route path="Modal" element={<Modal />} />
           <Route path="Payment" element={<Payment />} />
-          <Route path="Success" element={<Success />} />
+          <Route path="Success" element={<Success />} /> */}
           {/* <Modal /> */}
         </Routes>
       </BrowserRouter>

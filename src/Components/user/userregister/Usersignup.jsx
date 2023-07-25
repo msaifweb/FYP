@@ -45,15 +45,9 @@ export default function Usersignup() {
     email: "",
     // role: "",
   });
-  // const [name, setName] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [phone, setPhone] = useState(0);
-  // const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     signupUser(formData);
   };
 

@@ -14,6 +14,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { AuthContext } from "../../AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -36,37 +37,31 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function Usersignin() {
-  // const { handleLogin } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: "",
     password: "",
     phone: 0,
     email: "",
-    // role: "",
   });
-  // const [name, setName] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [phone, setPhone] = useState(0);
-  // const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    signupUser(formData);
-  };
-
-  const signupUser = async (userData) => {
-    try {
-      const response = await axios.post(
-        "http://localhost:4000/login",
-        userData
-      );
-      console.log("User signed up successfully:", response.data);
-    } catch (error) {
-      console.error("Error signing up user:", error.response.data);
-    }
+    axios
+      .post("http://localhost:4000/login", {
+        name: formData.name,
+        password: formData.password,
+        phone: formData.phone,
+        email: formData.email,
+      })
+      .then((res) => {
+        // console.log(res);
+        localStorage.setItem("token", res);
+        navigate("/UserDashboard");
+      })
+      .catch((err) => console.log(err));
   };
 
   const handleChange = (e) => {
@@ -124,17 +119,6 @@ export default function Usersignin() {
                   onChange={handleChange}
                 />
               </Grid>
-              {/* <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="role"
-                  label="Role"
-                  // type="password"
-                  value={formData.role}
-                  onChange={handleChange}
-                />
-              </Grid> */}
               <Grid item xs={12}>
                 <FormControlLabel
                   control={
