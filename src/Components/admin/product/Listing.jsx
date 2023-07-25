@@ -53,15 +53,35 @@ const Listing = () => {
   const [listing, setListing] = useState([]);
   const [error, setError] = useState(null);
   console.log(listing);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:4000/getallbillboard")
+  //     .then((response) => {
+  //       setListing(response.data);
+  //     })
+  //     .catch((error) => {
+  //       setError(error.message);
+  //     });
+  // }, []);
+
   useEffect(() => {
-    axios
-      .get("http://localhost:4000/getallbillboard")
-      .then((response) => {
+    const fetchData = async () => {
+      try {
+        let jwt_token = localStorage.getItem("token") || null;
+        axios.defaults.headers.common["x-auth-token"] = jwt_token;
+        console.log(jwt_token);
+
+        const response = await axios.get(
+          "http://localhost:4000/api/getallusers"
+        );
+
         setListing(response.data);
-      })
-      .catch((error) => {
+      } catch (error) {
         setError(error.message);
-      });
+      }
+    };
+
+    fetchData();
   }, []);
 
   const handleShowModal = () => {

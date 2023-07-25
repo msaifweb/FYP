@@ -8,7 +8,7 @@ const Addproduct = () => {
   const [formData, setFormData] = useState({
     location: "",
     size: "",
-    perDayRate: Number,
+    perDayRate: 0,
     // status: "",
     image: "",
   });
@@ -44,15 +44,16 @@ const Addproduct = () => {
         //   },
         // }
       );
-      // let jwt_token = localStorage.getItem("token") || null;
-      // axios.defaults.headers.common["x-auth-token"] = jwt_token;
+      let jwt_token = localStorage.getItem("token") || null;
+      axios.defaults.headers.common["x-auth-token"] = jwt_token;
+      console.log(jwt_token);
       console.log("User signed up successfully:", response.data);
-      setFormData({
-        location: "",
-        size: "",
-        perDayRate: "",
-        image: "",
-      });
+      // setFormData({
+      //   location: "",
+      //   size: "",
+      //   perDayRate: "",
+      //   image: "",
+      // });
     } catch (error) {
       console.error("Error signing up user:", error.response.data);
     }
@@ -113,7 +114,7 @@ const Addproduct = () => {
                 required
               />
             </div>
-
+            {/* 
             <div className="mb-3">
               <label htmlFor="image" className="form-label">
                 BillBoard Image:
@@ -128,7 +129,7 @@ const Addproduct = () => {
                 type="file"
                 required
               />
-            </div>
+            </div> */}
             <div>
               <button type="submit" className="btn btn-primary">
                 Add Billboard
