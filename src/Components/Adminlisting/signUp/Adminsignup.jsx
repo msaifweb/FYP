@@ -43,7 +43,7 @@ export default function Adminsignup() {
     password: "",
     phone: 0,
     email: "",
-    role: "",
+    // role: "",
   });
   // const [name, setName] = useState("");
   // const [password, setPassword] = useState("");
@@ -148,7 +148,7 @@ export default function Adminsignup() {
                   onChange={handleChange}
                 />
               </Grid>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
@@ -158,7 +158,7 @@ export default function Adminsignup() {
                   value={formData.role}
                   onChange={handleChange}
                 />
-              </Grid>
+              </Grid> */}
               <Grid item xs={12}>
                 <FormControlLabel
                   control={

@@ -53,15 +53,34 @@ const Totalusers = () => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   console.log(data);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:4000/api/getallusers")
+  //     .then((response) => {
+  //       setData(response.data);
+  //     })
+  //     .catch((error) => {
+  //       setError(error.message);
+  //     });
+  //   let jwt_token = localStorage.getItem("token") || null;
+  //   axios.defaults.headers.common["x-auth-token"] = jwt_token;
+  // }, []);
   useEffect(() => {
-    axios
-      .get("http://localhost:4000/getallusers")
-      .then((response) => {
+    const fetchData = async () => {
+      try {
+        let jwt_token = localStorage.getItem("token") || null;
+        axios.defaults.headers.common["x-auth-token"] = jwt_token;
+
+        const response = await axios.get(
+          "http://localhost:4000/api/getallusers"
+        );
         setData(response.data);
-      })
-      .catch((error) => {
+      } catch (error) {
         setError(error.message);
-      });
+      }
+    };
+
+    fetchData();
   }, []);
 
   const handleShowModal = () => {

@@ -26,6 +26,8 @@ import Listing from "./Components/admin/product/Listing";
 import UserDashboard from "./Components/user/UserDashboard";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import { AuthProvider } from "./Components/AuthContext";
+import Usersignup from "./Components/user/userregister/Usersignup";
+import Usersignin from "./Components/user/userregister/Usersignin";
 
 function App() {
   return (
@@ -44,8 +46,11 @@ function App() {
           <Route path="/listing" element={<Listing />} />
           {/* <Route path="/listing" element={<Listing />} /> */}
           <Route path="signin" element={<LoginPage />} />
-          <Route path="adminsignup" element={<Adminsignup />} />
+          {/* <Route path="adminsignup" element={<Adminsignup />} /> */}
           <Route path="UserDashboard" element={<UserDashboard />} />
+          <Route path="usersignup" element={<Usersignup />} />
+          <Route path="usersignin" element={<Usersignin />} />
+
           <Route path="/" element={<Nav />} />
           <Route path="billboard" element={<BillBoard />} />
           <Route path="booking" element={<Booking />} />

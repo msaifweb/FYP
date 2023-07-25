@@ -20,17 +20,17 @@ const Header = ({ type }) => {
       key: "selection",
     },
   ]);
- 
+
   return (
     <>
       <div className="navbar ">
         <span className="logo">Ultra Sign Solutions</span>
         <ul className="navItems">
-<Link to="/signin">
-          <button className="navButton btn btn-primary m-2 ">Sign In</button>
-      </Link>
-      <Link to="/signUp">
-          <button className="navButton btn btn-primary m-2">Register</button>
+          <Link to="/usersignin">
+            <button className="navButton btn btn-primary m-2 ">Sign In</button>
+          </Link>
+          <Link to="/usersignup">
+            <button className="navButton btn btn-primary m-2">Register</button>
           </Link>
         </ul>
       </div>
@@ -53,8 +53,10 @@ const Header = ({ type }) => {
               <button className="headerBtn">Sign in / Register</button>
               <div className="headerSearch">
                 <div className="headerSearchItem">
-
-                  <FontAwesomeIcon icon={faLocationDot} className="headerIcon" />
+                  <FontAwesomeIcon
+                    icon={faLocationDot}
+                    className="headerIcon"
+                  />
                   <input
                     type="text"
                     placeholder="Advertising Location"
@@ -86,10 +88,7 @@ const Header = ({ type }) => {
                   )}
                 </div>
                 <div className="headerSearchItem ">
-                  <button className="headerBtn">
-                   
-                    Search
-                  </button>
+                  <button className="headerBtn">Search</button>
                 </div>
               </div>
             </>
