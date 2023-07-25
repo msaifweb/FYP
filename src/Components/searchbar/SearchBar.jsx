@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { BiSearch } from "react-icons/bi";
-import './searchbar.css'
+import "./searchbar.css";
 
 const SearchBar = ({ onSearch }) => {
   const [location, setLocation] = useState("");
@@ -22,7 +22,10 @@ const SearchBar = ({ onSearch }) => {
 
   return (
     <div className="search">
-      <form onSubmit={handleSearch} className="d-flex align-items-center form-1">
+      <form
+        onSubmit={handleSearch}
+        className="d-flex align-items-center form-1"
+      >
         <div className="input-group">
           <span className="input-group-text">
             Search Location

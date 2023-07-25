@@ -1,0 +1,18 @@
+@import url("https://fonts.cdnfonts.com/css/amazon-ember");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Amazon Ember", sans-serif;
+}
+
+.addPro {
+  padding: 12px;
+  font-weight: bold;
+  border: 1px solid rgb(223, 223, 223);
+  width: 600px !important;
+  margin-top: 50px !important;
+  border-radius: 10px !important;
+  /* background-color: rgb(243, 243, 243);
+    box-shadow: 6px 10px rgb(204, 204, 204); */
+}

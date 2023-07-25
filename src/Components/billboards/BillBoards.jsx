@@ -1,8 +1,8 @@
 import React from "react";
 import "./billboards.css";
-import {Row, Col, Card, Button } from "react-bootstrap";
+import { Row, Col, Card, Button } from "react-bootstrap";
 import billboard from "../images/billboard1.jpg";
-
+import { Link } from "react-router-dom";
 
 const products = [
   {
@@ -97,7 +97,9 @@ const Product = () => {
                   <Card.Text>{product.description}</Card.Text>
 
                   <Card.Text>Price: ${product.price}</Card.Text>
-                  <Button variant="primary">Book Now</Button>
+                  <Link to="/Details">
+                    <Button variant="primary">Book Now</Button>
+                  </Link>
                 </Card.Body>
               </Card>
             </Col>

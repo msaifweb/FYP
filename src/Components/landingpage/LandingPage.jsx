@@ -3,7 +3,7 @@ import "./landingpage.css";
 import dha from "../images/DHA.jpg";
 import gulberg from "../images/gulberg.webp";
 import bahriaTown from "../images/bahria town.jpg";
-// import FeaturedProperties from "../featuredProperties/FeaturedProperties";
+import FeaturedProperties from "../featuredProperties/FeaturedProperties";
 import Header from "../header/Header";
 import Products from "../billboards/BillBoards";
 import Footer from "../footer/Footer";
@@ -29,7 +29,7 @@ const LandingPage = () => {
             {/* <Link href="signin"> */}
             <h1>Gulberg</h1>
             {/* </Link> */}
-            
+
             <h2>124 Billboards</h2>
           </div>
         </div>
@@ -44,7 +44,7 @@ const LandingPage = () => {
       {/* <FeaturedProperties /> */}
       <Products />
 
-     <Footer/>
+      <Footer />
     </>
   );
 };

@@ -26,11 +26,11 @@
 
 /* Dashboard */
 
-.sidebarHeader{
+.sidebarHeader {
   text-align: center;
 }
 
-.dasHeader{
+.dasHeader {
   text-align: center;
 }
 .card-font-size {
@@ -117,5 +117,3 @@ ul.CTAs a {
   border-radius: 5px;
   margin-bottom: 5px;
 }
-
-
