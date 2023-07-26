@@ -146,7 +146,7 @@ const Addproduct = () => {
               />
             </div>
 
-            {/* <div className="mb-3">
+            <div className="mb-3">
               <label htmlFor="image" className="form-label">
                 BillBoard Image:
               </label>
@@ -160,7 +160,7 @@ const Addproduct = () => {
                 type="file"
                 required
               />
-            </div> */}
+            </div>
             <div>
               <button type="submit" className="btn btn-primary">
                 Add Billboard
