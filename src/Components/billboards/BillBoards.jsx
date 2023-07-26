@@ -68,8 +68,11 @@ const products = [
   },
 ];
 const Product = () => {
-  const [billBoard, setBillBoard] = useState();
+  const [billBoard, setBillBoard] = useState([]);
   const loadData = async () => {
+    let jwt_token = localStorage.getItem("token") || null;
+    axios.defaults.headers.common["x-auth-token"] = jwt_token;
+
     const response = await axios.get(
       "http://localhost:4000/api/getallbillboard"
     );
@@ -78,9 +81,7 @@ const Product = () => {
   };
   console.log({ billBoard });
   useEffect(() => {
-    let jwt_token = localStorage.getItem("token") || null;
-    axios.defaults.headers.common["x-auth-token"] = jwt_token;
-    jwt_token && loadData();
+    loadData();
   }, []);
   return (
     <>
@@ -95,6 +96,7 @@ const Product = () => {
 
         <Row className="product-card1">
           {billBoard &&
+            billBoard.length > 0 &&
             billBoard.map((product) => (
               <Col key={product.id} md={3} className="mx-3">
                 <Card className="productCard1">

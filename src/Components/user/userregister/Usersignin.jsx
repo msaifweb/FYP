@@ -54,7 +54,7 @@ export default function Usersignin() {
       })
       .then((res) => {
         console.log(res);
-        localStorage.setItem("token", JSON.stringify(res.data));
+        localStorage.setItem("token", res.data);
         navigate("/UserDashboard");
       })
       .catch((err) => console.log(err));

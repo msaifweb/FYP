@@ -6,7 +6,7 @@ const getRoutes = () => [
   {
     path: "",
     children: [
-      { index: true, element: <Navigate to="usersignin" /> },
+      { index: true, element: <Navigate to="/home" /> },
       getAuthRoutes(),
       getUnAuthRoutes(),
     ],

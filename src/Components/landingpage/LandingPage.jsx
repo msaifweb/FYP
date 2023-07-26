@@ -3,7 +3,6 @@ import "./landingpage.css";
 import dha from "../images/DHA.jpg";
 import gulberg from "../images/gulberg.webp";
 import bahriaTown from "../images/bahria town.jpg";
-import FeaturedProperties from "../featuredProperties/FeaturedProperties";
 import Header from "../header/Header";
 import Products from "../billboards/BillBoards";
 import Footer from "../footer/Footer";

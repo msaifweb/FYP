@@ -1,7 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useState } from "react";
 import jwt_decode from "jwt-decode";
-import LandingPage from "../Components/landingpage/LandingPage";
 import LoginPage from "../Components/login/LoginPage";
 import Booking from "../Components/booking/Booking";
 import Profile from "../Components/profile/profile";
@@ -28,6 +27,7 @@ import Reserve from "../Components/user/Reserve/Reserve";
 import Addadmin from "../Components/administrator/addadmin/Addadmin";
 import Reserves from "../Components/admin/reserves/Reserves";
 import Totaladmin from "../Components/administrator/totaladmin/Totaladmin";
+import LandingPage from "../Components/landingpage/LandingPage";
 
 const isLoggedIn = () => localStorage.getItem("token") || null;
 
@@ -35,7 +35,8 @@ const getAuthRoutes = () => ({
   path: "",
   element: isLoggedIn() ? <Outlet /> : <Navigate to="/usersignin" />,
   children: [
-    { path: "/", element: <LandingPage /> },
+    { path: "/home", element: <LandingPage /> },
+
     { path: "/administrator", element: <Administrator /> },
     { path: "/addadmin", element: <Addadmin /> },
     { path: "/totaladmin", element: <Totaladmin /> },
