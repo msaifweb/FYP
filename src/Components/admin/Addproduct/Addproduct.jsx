@@ -12,9 +12,8 @@ const Addproduct = () => {
     location: "",
     size: "",
     perDayRate: 0,
-    status: "Available",
+    // status: "",
     image: "",
-    userId: id,
   });
 
   const handleChange = (e) => {
@@ -32,19 +31,64 @@ const Addproduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    axios.defaults.headers.common["x-auth-token"] = jwt_token;
 
+    //   const formDataToSend = new FormData();
+    //   formDataToSend.append("location", location);
+    //   formDataToSend.append("size", size);
+    //   formDataToSend.append("perDayRate", perDayRate);
+    //   formDataToSend.append("image", image);
+
+    Adddata(formData);
+  };
+
+  const Adddata = async (userData) => {
     try {
       const response = await axios.post(
         "http://localhost:4000/api/createbillboard",
-        formData
+        userData
+        // {
+        //   headers: {
+        //     "Content-Type": "multipart/form-data", // Important! Set the content type to multipart/form-data for file upload
+        //   },
+        // }
       );
 
       console.log("User signed up successfully:", response.data);
     } catch (error) {
       console.error("Error signing up user:", error.response.data);
     }
+    // };
+    // Adddata(formData);
   };
+
+  // const Adddata = async (userData) => {
+  //   let jwt_token = localStorage.getItem("token") || null;
+  //   axios.defaults.headers.common["x-auth-token"] = jwt_token;
+  //   console.log(jwt_token);
+  //   try {
+  //     const response = await axios.post(
+  //       "http://localhost:4000/api/createbillboard",
+  //       userData
+  //       // {
+  //       //   headers: {
+  //       //     "Content-Type": "multipart/form-data", // Important! Set the content type to multipart/form-data for file upload
+  //       //   },
+  //       // }
+  //     );
+  //     // let jwt_token = localStorage.getItem("token") || null;
+  //     // axios.defaults.headers.common["x-auth-token"] = jwt_token;
+  //     // console.log(jwt_token);
+  //     console.log("User signed up successfully:", response.data);
+  //     // setFormData({
+  //     //   location: "",
+  //     //   size: "",
+  //     //   perDayRate: "",
+  //     //   image: "",
+  //     // });
+  //   } catch (error) {
+  //     console.error("Error signing up user:", error.response.data);
+  //   }
+  // };
 
   return (
     <div className="row">
@@ -102,7 +146,7 @@ const Addproduct = () => {
               />
             </div>
 
-            <div className="mb-3">
+            {/* <div className="mb-3">
               <label htmlFor="image" className="form-label">
                 BillBoard Image:
               </label>
@@ -116,7 +160,7 @@ const Addproduct = () => {
                 type="file"
                 required
               />
-            </div>
+            </div> */}
             <div>
               <button type="submit" className="btn btn-primary">
                 Add Billboard

@@ -1,5 +1,6 @@
 import "./administrator.css";
 import React, { useState, useEffect } from "react";
+import { Modal } from "react-bootstrap";
 
 import axios from "axios";
 
@@ -25,7 +26,14 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import { Container } from "@mui/material";
 import { TablePagination } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Avatar from "@mui/material/Avatar";
+import CssBaseline from "@mui/material/CssBaseline";
+import Typography from "@mui/material/Typography";
+
 import Sidebar from "./sidebar/Sidebar";
+const theme = createTheme();
+// import Typography from "@mui/material/Typography";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -47,10 +55,27 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
+// const handleSubmit = async (id) => {
+
+// // };
+
 const Totalusers = () => {
   const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState([]);
-
+  const [error, setError] = useState(null);
+  // console.log(data);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:4000/api/getallusers")
+  //     .then((response) => {
+  //       setData(response.data);
+  //     })
+  //     .catch((error) => {
+  //       setError(error.message);
+  //     });
+  //   let jwt_token = localStorage.getItem("token") || null;
+  //   axios.defaults.headers.common["x-auth-token"] = jwt_token;
+  // }, []);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -70,12 +95,35 @@ const Totalusers = () => {
     fetchData();
   }, []);
 
-  const handleShowModal = () => {
+  const handleShowModal = (item) => {
+    setUpdateData(item);
+
     setShowModal(true);
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .put(`http://localhost:4000/api/updateuser`)
+      .then(() => {
+        // setEditingUser(null);
+        // getUsers();
+      })
+      .catch((error) => {
+        console.error("Error updating user:", error.response.data);
+      });
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUpdateData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   {
@@ -141,11 +189,104 @@ const Totalusers = () => {
                         </Button>
                         &nbsp; &nbsp;
                         {/******************  Update Dialog Start  **************************/}
-                        <Button>
+                        <Button
+                          onClick={() => handleShowModal(item.id)}
+                          // onClick={handleShowModal}
+                        >
                           Edit
                           <EditIcon />
                         </Button>
                       </StyledTableCell>
+
+                      {/* <button onClick={handleShowModal}>Details</button> */}
+
+                      <Modal show={showModal} onHide={handleCloseModal}>
+                        <Modal.Header closeButton>
+                          <Modal.Title>Update Data</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                          {/* Content of the modal */}
+                          {/* Add your form fields or any other content here */}
+                          <ThemeProvider theme={theme}>
+                            <Container component="main" maxWidth="xs">
+                              <CssBaseline />
+                              <Box
+                                sx={{
+                                  marginTop: 0,
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  alignItems: "center",
+                                }}
+                              >
+                                {/* <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                  Sign In
+                </Typography> */}
+                                <Box
+                                  component="form"
+                                  noValidate
+                                  onSubmit={handleSubmit}
+                                  sx={{ mt: 3 }}
+                                >
+                                  <Grid container spacing={2}>
+                                    <Grid item xs={12}>
+                                      <TextField
+                                        required
+                                        fullWidth
+                                        id="name"
+                                        label="Name"
+                                        name="name"
+                                        value={updateData.name}
+                                        onChange={handleChange}
+
+                                        // autoComplete="email"
+                                      />
+                                    </Grid>
+
+                                    <Grid item xs={12}>
+                                      <TextField
+                                        required
+                                        fullWidth
+                                        name="phone"
+                                        label="Phone"
+                                        // type=""
+                                        value={updateData.phone}
+                                        onChange={handleChange}
+                                      />
+                                    </Grid>
+                                    {/* <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Checkbox value="allowExtraEmails" color="primary" />
+                  }
+                  label="I want to receive inspiration, marketing promotions and updates via email."
+                />
+              </Grid> */}
+                                  </Grid>
+                                  <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2 }}
+                                  >
+                                    Update{" "}
+                                  </Button>
+                                </Box>
+                              </Box>
+                            </Container>
+                          </ThemeProvider>
+                        </Modal.Body>
+                        <Modal.Footer>
+                          <Button
+                            variant="secondary"
+                            onClick={handleCloseModal}
+                          >
+                            Close
+                          </Button>
+                          {/* <Button variant="primary">Add Billboard</Button> */}
+                        </Modal.Footer>
+                      </Modal>
                     </StyledTableRow>
                   );
                 })}
