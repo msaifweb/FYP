@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route, Link, Navigate } from "react-router-dom";
 import { useState } from "react";
@@ -31,49 +32,14 @@ import Reserve from "./Components/user/Reserve/Reserve";
 import Addadmin from "./Components/administrator/addadmin/Addadmin";
 import Reserves from "./Components/admin/reserves/Reserves";
 import Totaladmin from "./Components/administrator/totaladmin/Totaladmin";
+=======
+import { useRoutes } from "react-router-dom";
+import getRoutes from "./routes";
+>>>>>>> Stashed changes
 
 function App() {
-  return (
-    <>
-      {/* <Footer /> */}
-      {/* <Success/> */}
-      {/* <PaymentPage/> */}
-
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/administrator" element={<Administrator />} />
-          <Route path="/addadmin" element={<Addadmin />} />
-          <Route path="/totaladmin" element={<Totaladmin />} />
-
-          <Route path="/totalusers" element={<Totalusers />} />
-          <Route path="/admin" element={<DashBoard />} />
-          <Route path="/addproduct" element={<Addproduct />} />
-          <Route path="/listing" element={<Listing />} />
-          <Route path="/reserves" element={<Reserves />} />
-
-          {/* <Route path="/listing" element={<Listing />} /> */}
-          {/* <Route path="signin" element={<LoginPage />} /> */}
-          {/* <Route path="adminsignup" element={<Adminsignup />} /> */}
-          <Route path="UserDashboard" element={<UserDashboard />} />
-          <Route path="usersignup" element={<Usersignup />} />
-          <Route path="usersignin" element={<Usersignin />} />
-          <Route path="reserve" element={<Reserve />} />
-
-          {/* <Route path="/" element={<Nav />} /> */}
-          <Route path="billboard" element={<BillBoard />} />
-          <Route path="booking" element={<Booking />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="AddProductPage" element={<AddProductPage />} />
-          <Route path="Details" element={<Details />} />
-          {/* <Route path="Modal" element={<Modal />} />
-          <Route path="Payment" element={<Payment />} />
-          <Route path="Success" element={<Success />} /> */}
-          {/* <Modal /> */}
-        </Routes>
-      </BrowserRouter>
-    </>
-  );
+  const routes = useRoutes(getRoutes());
+  return <div>{routes}</div>;
 }
 
 export default App;

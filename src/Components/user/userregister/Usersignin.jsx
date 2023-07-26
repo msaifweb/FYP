@@ -14,7 +14,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { AuthContext } from "../../AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link as DomLink } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -54,8 +54,8 @@ export default function Usersignin() {
       })
       .then((res) => {
         console.log(res);
-        localStorage.setItem("token", res.data);
-        // navigate("/UserDashboard");
+        localStorage.setItem("token", JSON.stringify(res.data));
+        navigate("/UserDashboard");
       })
       .catch((err) => console.log(err));
   };
@@ -115,14 +115,6 @@ export default function Usersignin() {
                   onChange={handleChange}
                 />
               </Grid>
-              {/* <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid> */}
             </Grid>
             <Button
               type="submit"
@@ -133,6 +125,14 @@ export default function Usersignin() {
               Sign In
             </Button>
           </Box>
+
+          <Grid container justifyContent="flex-end">
+            <Grid item>
+              <Link href="/usersignup" variant="body2">
+                Sign Up
+              </Link>
+            </Grid>
+          </Grid>
         </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>

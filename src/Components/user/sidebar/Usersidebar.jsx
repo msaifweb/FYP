@@ -72,6 +72,27 @@ function Usersidebar() {
                   </a>
                 </li>
               </Link>
+
+              <Link
+                to="/"
+                style={{
+                  color: "white",
+                  // textDecoration: "none",
+                }}
+              >
+                <li
+                  style={{
+                    textAlign: "center",
+                    marginTop: "70vh",
+                  }}
+                >
+                  <a>
+                    <span onClick={() => localStorage.removeItem("token")}>
+                      Logout
+                    </span>
+                  </a>
+                </li>
+              </Link>
             </ul>
           </nav>
         </div>
