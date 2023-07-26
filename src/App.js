@@ -18,7 +18,7 @@ import Payment from "./Components/payment/Payment";
 import Administrator from "./Components/administrator/Administrator";
 // import Listing from "./Components/Adminlisting/Listing";
 import DashBoard from "./Components/admin/adminDashboard/Dashboard";
-import Adminsignup from "./Components/Adminlisting/signUp/Adminsignup";
+// import Adminsignup from "./Components/Adminlisting/signUp/Adminsignup";
 import Totalusers from "./Components/administrator/Totalusers";
 import Addproduct from "./Components/admin/Addproduct/Addproduct";
 import Listing from "./Components/admin/listing/Listing";
