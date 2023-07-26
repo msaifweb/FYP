@@ -21,12 +21,15 @@ import DashBoard from "./Components/admin/adminDashboard/Dashboard";
 import Adminsignup from "./Components/Adminlisting/signUp/Adminsignup";
 import Totalusers from "./Components/administrator/Totalusers";
 import Addproduct from "./Components/admin/Addproduct/Addproduct";
-import Listing from "./Components/admin/product/Listing";
+import Listing from "./Components/admin/listing/Listing";
 import UserDashboard from "./Components/user/UserDashboard";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import { AuthProvider } from "./Components/AuthContext";
 import Usersignup from "./Components/user/userregister/Usersignup";
 import Usersignin from "./Components/user/userregister/Usersignin";
+import Reserve from "./Components/user/Reserve/Reserve";
+import Addadmin from "./Components/administrator/addadmin/Addadmin";
+import Reserves from "./Components/admin/reserves/Reserves";
 
 function App() {
   return (
@@ -39,16 +42,21 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/administrator" element={<Administrator />} />
+          <Route path="/addadmin" element={<Addadmin />} />
+
           <Route path="/totalusers" element={<Totalusers />} />
           <Route path="/admin" element={<DashBoard />} />
           <Route path="/addproduct" element={<Addproduct />} />
           <Route path="/listing" element={<Listing />} />
+          <Route path="/reserves" element={<Reserves />} />
+
           {/* <Route path="/listing" element={<Listing />} /> */}
           {/* <Route path="signin" element={<LoginPage />} /> */}
           {/* <Route path="adminsignup" element={<Adminsignup />} /> */}
           <Route path="UserDashboard" element={<UserDashboard />} />
           <Route path="usersignup" element={<Usersignup />} />
           <Route path="usersignin" element={<Usersignin />} />
+          <Route path="reserve" element={<Reserve />} />
 
           {/* <Route path="/" element={<Nav />} /> */}
           <Route path="billboard" element={<BillBoard />} />

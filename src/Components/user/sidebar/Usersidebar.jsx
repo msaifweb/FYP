@@ -51,23 +51,24 @@ function Usersidebar() {
         <div className="sidebar-wrapper">
           <nav id="sidebar">
             <ul className="list-unstyled components">
-              <li>
-                <a href="#" className="sidebarHeader">
-                  <i className="fas fa-tachometer-alt  " /> Dashboard
-                </a>
-              </li>
+              <Link to="/UserDashboard">
+                <li>
+                  <a href="#" className="sidebarHeader">
+                    <i className="fas fa-tachometer-alt  " /> Dashboard
+                  </a>
+                </li>
+              </Link>
 
               <li onClick={handleShowModal}>
                 <a href="#" className="sidebarHeader">
                   <i className="fas fa-tachometer-alt  " /> Profile
                 </a>
               </li>
-
-              <Link to="/totalusers">
+              <Link to="/reserve">
                 <li>
                   <a href="#" className="sidebarHeader">
                     <i className="fas fa-tachometer-alt  " />
-                    Users
+                    Reserve
                   </a>
                 </li>
               </Link>

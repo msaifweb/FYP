@@ -69,7 +69,7 @@ const Addproduct = () => {
         <div className="container addPro shadow-lg">
           {/* <img src={image} alt="" /> */}
           <h1>Add New Billboard</h1>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} enctype="multipart/form-data">
             <div className="mb-3">
               <label htmlFor="location" className="form-label">
                 Location:
@@ -114,7 +114,7 @@ const Addproduct = () => {
                 required
               />
             </div>
-            {/* 
+
             <div className="mb-3">
               <label htmlFor="image" className="form-label">
                 BillBoard Image:
@@ -129,7 +129,7 @@ const Addproduct = () => {
                 type="file"
                 required
               />
-            </div> */}
+            </div>
             <div>
               <button type="submit" className="btn btn-primary">
                 Add Billboard

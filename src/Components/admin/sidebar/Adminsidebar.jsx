@@ -33,7 +33,15 @@ function Adminsidebar() {
                 <li>
                   <a href="#" className="sidebarHeader">
                     <i className="fas fa-tachometer-alt  " />
-                    Products
+                    Listing
+                  </a>
+                </li>
+              </Link>
+              <Link to="/reserves">
+                <li>
+                  <a href="#" className="sidebarHeader">
+                    <i className="fas fa-tachometer-alt  " />
+                    Reserves{" "}
                   </a>
                 </li>
               </Link>

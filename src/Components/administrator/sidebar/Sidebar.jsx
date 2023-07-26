@@ -8,16 +8,27 @@ function Sidebar() {
         <div className="sidebar-wrapper">
           <nav id="sidebar">
             <ul className="list-unstyled components">
-              <li>
-                <a href="#" className="sidebarHeader">
-                  <i className="fas fa-tachometer-alt  " /> Dashboard
-                </a>
-              </li>
+              <Link to="/administrator">
+                <li>
+                  <a href="#" className="sidebarHeader">
+                    <i className="fas fa-tachometer-alt  " /> Dashboard
+                  </a>
+                </li>
+              </Link>
+
               <li>
                 <a href="#" className="sidebarHeader">
                   <i className="fas fa-tachometer-alt  " /> Profile
                 </a>
               </li>
+              <Link to="/addadmin">
+                <li>
+                  <a href="#" className="sidebarHeader">
+                    <i className="fas fa-tachometer-alt  " /> Add Admin
+                  </a>
+                </li>
+              </Link>
+
               <Link to="/totalusers">
                 <li>
                   <a href="#" className="sidebarHeader">
