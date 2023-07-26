@@ -1,59 +1,46 @@
 import React, { useState } from "react";
 import axios from "axios";
-
 import "./addproduct.css";
 import Adminsidebar from "../sidebar/Adminsidebar";
+import jwtDecode from "jwt-decode";
 
 const Addproduct = () => {
+  let jwt_token = localStorage.getItem("token") || null;
+  const { id } = jwtDecode(jwt_token);
+
   const [formData, setFormData] = useState({
     location: "",
     size: "",
     perDayRate: 0,
-    // status: "",
+    status: "Available",
     image: "",
+    userId: id,
   });
 
-  // const handleImageChange = (e) => {
-  //   setImage(e.target.value);
-  // };
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const { name, value, files } = e.target;
+    if (name === "image" && files && files.length > 0) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData({ ...formData, [name]: reader.result });
+      };
+      reader.readAsDataURL(files[0]);
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    axios.defaults.headers.common["x-auth-token"] = jwt_token;
 
-    //   const formDataToSend = new FormData();
-    //   formDataToSend.append("location", location);
-    //   formDataToSend.append("size", size);
-    //   formDataToSend.append("perDayRate", perDayRate);
-    //   formDataToSend.append("image", image);
-
-    Adddata(formData);
-  };
-
-  const Adddata = async (userData) => {
     try {
       const response = await axios.post(
         "http://localhost:4000/api/createbillboard",
-        userData
-        // {
-        //   headers: {
-        //     "Content-Type": "multipart/form-data", // Important! Set the content type to multipart/form-data for file upload
-        //   },
-        // }
+        formData
       );
-      let jwt_token = localStorage.getItem("token") || null;
-      axios.defaults.headers.common["x-auth-token"] = jwt_token;
-      console.log(jwt_token);
+
       console.log("User signed up successfully:", response.data);
-      // setFormData({
-      //   location: "",
-      //   size: "",
-      //   perDayRate: "",
-      //   image: "",
-      // });
     } catch (error) {
       console.error("Error signing up user:", error.response.data);
     }

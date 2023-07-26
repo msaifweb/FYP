@@ -49,22 +49,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const Totalusers = () => {
   const [showModal, setShowModal] = useState(false);
-
   const [data, setData] = useState([]);
-  const [error, setError] = useState(null);
-  // console.log(data);
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:4000/api/getallusers")
-  //     .then((response) => {
-  //       setData(response.data);
-  //     })
-  //     .catch((error) => {
-  //       setError(error.message);
-  //     });
-  //   let jwt_token = localStorage.getItem("token") || null;
-  //   axios.defaults.headers.common["x-auth-token"] = jwt_token;
-  // }, []);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -75,10 +61,9 @@ const Totalusers = () => {
         const response = await axios.get(
           "http://localhost:4000/api/getallusers"
         );
-
         setData(response.data);
       } catch (error) {
-        setError(error.message);
+        console.log(error.message);
       }
     };
 
@@ -133,38 +118,27 @@ const Totalusers = () => {
                 {data.slice(startIndex, endIndex).map((item, i) => {
                   return (
                     <StyledTableRow key={i}>
-                      <StyledTableCell align="left">
-                        {" "}
-                        {item.id}{" "}
-                      </StyledTableCell>
-
+                      <StyledTableCell align="left">{item.id}</StyledTableCell>
                       <StyledTableCell component="th" scope="row">
                         {item.name}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        {" "}
-                        {item.email}{" "}
+                        {item.email}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        {" "}
-                        {item.phone}{" "}
+                        {item.phone}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        {" "}
-                        {item.status}{" "}
+                        {item.status}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        {" "}
-                        {item.role}{" "}
+                        {item.role}
                       </StyledTableCell>
-
                       <StyledTableCell align="right">
-                        {" "}
                         <Button>
-                          {" "}
                           Delete
                           <DeleteIcon />
-                        </Button>{" "}
+                        </Button>
                         &nbsp; &nbsp;
                         {/******************  Update Dialog Start  **************************/}
                         <Button>

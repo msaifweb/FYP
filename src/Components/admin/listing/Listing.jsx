@@ -72,7 +72,7 @@ const Listing = () => {
         console.log(jwt_token);
 
         const response = await axios.get(
-          "http://localhost:4000/api/getallusers"
+          "http://localhost:4000/api/getallbillboard"
         );
 
         setListing(response.data);
@@ -128,16 +128,24 @@ const Listing = () => {
 
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
+              <TableHead>
+                <StyledTableRow>
+                  <StyledTableCell component="th" scope="row">
+                    Location
+                  </StyledTableCell>
+                  <StyledTableCell align="right"> Size </StyledTableCell>
+                  <StyledTableCell align="right">Rate</StyledTableCell>
+                  <StyledTableCell align="right">Status</StyledTableCell>
+                  <StyledTableCell align="right">Image</StyledTableCell>
+
+                  <StyledTableCell align="right">Actions</StyledTableCell>
+                </StyledTableRow>
+              </TableHead>
               <TableBody>
                 {listing.slice(startIndex, endIndex).map((item, i) => {
-                  console.log(item);
+                  console.log({ item });
                   return (
                     <StyledTableRow key={i}>
-                      <StyledTableCell align="left">
-                        {" "}
-                        {item.id}{" "}
-                      </StyledTableCell>
-
                       <StyledTableCell component="th" scope="row">
                         {item.location}
                       </StyledTableCell>
@@ -154,8 +162,7 @@ const Listing = () => {
                         {item.status}{" "}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        <img src="" alt={item.image} />
-                        {/* {item.image}{" "} */}
+                        <img src={item.image} alt={item.location} width={150} />
                       </StyledTableCell>
 
                       <StyledTableCell align="right">
