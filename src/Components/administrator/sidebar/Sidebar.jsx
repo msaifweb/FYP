@@ -37,6 +37,15 @@ function Sidebar() {
                   </a>
                 </li>
               </Link>
+
+              <Link to="/totaladmin">
+                <li>
+                  <a href="#" className="sidebarHeader">
+                    <i className="fas fa-tachometer-alt  " />
+                    Total Admin
+                  </a>
+                </li>
+              </Link>
             </ul>
           </nav>
         </div>

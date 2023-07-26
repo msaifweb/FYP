@@ -98,7 +98,7 @@ const Product = () => {
 
                   <Card.Text>Price: ${product.price}</Card.Text>
                   <Link to="/Details">
-                    <Button variant="primary">Book Now</Button>
+                    <Button variant="primary">Details</Button>
                   </Link>
                 </Card.Body>
               </Card>

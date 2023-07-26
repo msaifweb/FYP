@@ -30,6 +30,7 @@ import Usersignin from "./Components/user/userregister/Usersignin";
 import Reserve from "./Components/user/Reserve/Reserve";
 import Addadmin from "./Components/administrator/addadmin/Addadmin";
 import Reserves from "./Components/admin/reserves/Reserves";
+import Totaladmin from "./Components/administrator/totaladmin/Totaladmin";
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/administrator" element={<Administrator />} />
           <Route path="/addadmin" element={<Addadmin />} />
+          <Route path="/totaladmin" element={<Totaladmin />} />
 
           <Route path="/totalusers" element={<Totalusers />} />
           <Route path="/admin" element={<DashBoard />} />
