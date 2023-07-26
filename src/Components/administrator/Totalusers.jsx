@@ -62,6 +62,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const Totalusers = () => {
   const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState([]);
+  const [updateData, setUpdateData] = useState([]);
   const [error, setError] = useState(null);
   // console.log(data);
   // useEffect(() => {
