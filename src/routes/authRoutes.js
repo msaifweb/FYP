@@ -8,11 +8,12 @@ import Totalusers from "../Components/administrator/Totalusers";
 import Addproduct from "../Components/admin/Addproduct/Addproduct";
 import Listing from "../Components/admin/listing/Listing";
 import UserDashboard from "../Components/user/UserDashboard";
-import Reserve from "../Components/user/Reserve/Reserve";
+
+import BillBoardListing from "../Components/user/BillBoardListing/BillBoardListing";
 import Addadmin from "../Components/administrator/addadmin/Addadmin";
 import Reserves from "../Components/admin/reserves/Reserves";
 import Totaladmin from "../Components/administrator/totaladmin/Totaladmin";
-import BillBoardListing from "../Components/user/BillBoardListing/BillBoardListing";
+import { isUser } from "../Components/utils";
 
 const isLoggedIn = () => localStorage.getItem("token") || null;
 
@@ -20,20 +21,70 @@ const getAuthRoutes = () => ({
   path: "",
   element: isLoggedIn() ? <Outlet /> : <Navigate to="/usersignin" />,
   children: [
-    { path: "/administrator", element: <Administrator /> },
-    { path: "/addadmin", element: <Addadmin /> },
-    { path: "/totaladmin", element: <Totaladmin /> },
-    { path: "/totalusers", element: <Totalusers /> },
-    { path: "/admin", element: <DashBoard /> },
-    { path: "/addproduct", element: <Addproduct /> },
-    { path: "/listing", element: <Listing /> },
-    { path: "/reserves", element: <Reserves /> },
+    {
+      path: "/administrator",
+      element:
+        isUser === "Administrator" ? (
+          <Administrator />
+        ) : (
+          <Navigate to="/UserDashboard" />
+        ),
+    },
+    {
+      path: "/addadmin",
+      element:
+        isUser === "Administrator" ? (
+          <Addadmin />
+        ) : (
+          <Navigate to="/UserDashboard" />
+        ),
+    },
+    {
+      path: "/totaladmin",
+      element:
+        isUser === "Administrator" ? (
+          <Totaladmin />
+        ) : (
+          <Navigate to="/UserDashboard" />
+        ),
+    },
+    {
+      path: "/totalusers",
+      element:
+        isUser === "Administrator" ? (
+          <Totalusers />
+        ) : (
+          <Navigate to="/UserDashboard" />
+        ),
+    },
+    {
+      path: "/admin",
+      element:
+        isUser === "Admin" ? <DashBoard /> : <Navigate to="/UserDashboard" />,
+    },
+    {
+      path: "/addproduct",
+      element:
+        isUser === "Admin" ? <Addproduct /> : <Navigate to="/UserDashboard" />,
+    },
+    {
+      path: "/listing",
+      element:
+        isUser === "Admin" ? <Listing /> : <Navigate to="/UserDashboard" />,
+    },
+    {
+      path: "/reserves",
+      element:
+        isUser === "Admin" ? <Reserves /> : <Navigate to="/UserDashboard" />,
+    },
     { path: "UserDashboard", element: <UserDashboard /> },
-    { path: "reserve", element: <Reserve /> },
-    { path: "booking", element: <Booking /> },
-    { path: "profile", element: <Profile /> },
-    { path: "AddProductPage", element: <AddProductPage /> },
     { path: "/billBoardListing", element: <BillBoardListing /> },
+
+    // { path: "reserve", element: <Reserve /> },
+    // { path: "billboard", element: <BillBoard /> },
+    // { path: "booking", element: <Booking /> }, remove this
+    // { path: "profile", element: <Profile /> }, remove this
+    // { path: "AddProductPage", element: <AddProductPage /> }, remove this
   ],
 });
 
