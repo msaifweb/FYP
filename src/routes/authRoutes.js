@@ -14,7 +14,7 @@ import Addadmin from "../Components/administrator/addadmin/Addadmin";
 import Reserves from "../Components/admin/reserves/Reserves";
 import Totaladmin from "../Components/administrator/totaladmin/Totaladmin";
 import { isUser } from "../Components/utils";
-
+import Reserve from "../Components/user/Reserve/Reserve";
 const isLoggedIn = () => localStorage.getItem("token") || null;
 
 const getAuthRoutes = () => ({
@@ -80,7 +80,7 @@ const getAuthRoutes = () => ({
     { path: "UserDashboard", element: <UserDashboard /> },
     { path: "/billBoardListing", element: <BillBoardListing /> },
 
-    // { path: "reserve", element: <Reserve /> },
+    { path: "reserve", element: <Reserve /> },
     // { path: "billboard", element: <BillBoard /> },
     // { path: "booking", element: <Booking /> }, remove this
     // { path: "profile", element: <Profile /> }, remove this
