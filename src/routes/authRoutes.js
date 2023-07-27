@@ -13,6 +13,7 @@ import Reserves from "../Components/admin/reserves/Reserves";
 import Totaladmin from "../Components/administrator/totaladmin/Totaladmin";
 import LandingPage from "../Components/landingpage/LandingPage";
 import { isUser } from "../Components/utils";
+
 const isLoggedIn = () => localStorage.getItem("token") || null;
 
 const getAuthRoutes = () => ({
@@ -24,60 +25,64 @@ const getAuthRoutes = () => ({
     {
       path: "/administrator",
       element:
-        isUser === "Administrator" ? (
+        isUser() === "Administrator" ? (
           <Administrator />
         ) : (
-          <Navigate to="/UserDashboard" />
+          <Navigate to="/userDashboard" />
         ),
     },
     {
       path: "/addadmin",
       element:
-        isUser === "Administrator" ? (
+        isUser() === "Administrator" ? (
           <Addadmin />
         ) : (
-          <Navigate to="/UserDashboard" />
+          <Navigate to="/userDashboard" />
         ),
     },
     {
       path: "/totaladmin",
       element:
-        isUser === "Administrator" ? (
+        isUser() === "Administrator" ? (
           <Totaladmin />
         ) : (
-          <Navigate to="/UserDashboard" />
+          <Navigate to="/userDashboard" />
         ),
     },
     {
       path: "/totalusers",
       element:
-        isUser === "Administrator" ? (
+        isUser() === "Administrator" ? (
           <Totalusers />
         ) : (
-          <Navigate to="/UserDashboard" />
+          <Navigate to="/userDashboard" />
         ),
     },
     {
       path: "/admin",
       element:
-        isUser === "Admin" ? <DashBoard /> : <Navigate to="/UserDashboard" />,
+        isUser() === "Admin" ? <DashBoard /> : <Navigate to="/userDashboard" />,
     },
     {
       path: "/addproduct",
       element:
-        isUser === "Admin" ? <Addproduct /> : <Navigate to="/UserDashboard" />,
+        isUser() === "Admin" ? (
+          <Addproduct />
+        ) : (
+          <Navigate to="/userDashboard" />
+        ),
     },
     {
       path: "/listing",
       element:
-        isUser === "Admin" ? <Listing /> : <Navigate to="/UserDashboard" />,
+        isUser() === "Admin" ? <Listing /> : <Navigate to="/userDashboard" />,
     },
     {
       path: "/reserves",
       element:
-        isUser === "Admin" ? <Reserves /> : <Navigate to="/UserDashboard" />,
+        isUser() === "Admin" ? <Reserves /> : <Navigate to="/userDashboard" />,
     },
-    { path: "UserDashboard", element: <UserDashboard /> },
+    { path: "userDashboard", element: <UserDashboard /> },
     // { path: "reserve", element: <Reserve /> },
     // { path: "billboard", element: <BillBoard /> },
     // { path: "booking", element: <Booking /> }, remove this
