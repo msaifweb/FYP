@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import "./landingpage.css";
-import dha from "../images/DHA.jpg";
-import gulberg from "../images/gulberg.webp";
-import bahriaTown from "../images/bahria town.jpg";
+import dha from "../../images/DHA.jpg";
+import gulberg from "../../images/gulberg.webp";
+import bahriaTown from "../../images/bahria town.jpg";
 import Header from "../header/Header";
 import Products from "../billboards/BillBoards";
 import Footer from "../footer/Footer";
 
 const LandingPage = () => {
+  const [destination, setDestination] = useState("");
+
   return (
     <>
-      <Header />
+      <Header destination={destination} setDestination={setDestination} />
       <div className="header"></div>
 
       <div className="featured">
@@ -41,7 +43,7 @@ const LandingPage = () => {
         </div>
       </div>
       {/* <FeaturedProperties /> */}
-      <Products />
+      <Products destination={destination} />
 
       <Footer />
     </>

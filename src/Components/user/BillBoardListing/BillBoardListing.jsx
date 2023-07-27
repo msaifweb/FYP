@@ -1,4 +1,3 @@
-import "./listing.css";
 import React, { useState, useEffect } from "react";
 
 import axios from "axios";
@@ -12,12 +11,12 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
+import AccessibilityRoundedIcon from "@mui/icons-material/AccessibilityRounded";
 import { TablePagination } from "@mui/material";
-import Adminsidebar from "../sidebar/Adminsidebar";
+import Usersidebar from "../sidebar/Usersidebar";
 import { toast } from "react-hot-toast";
 import { toastSetting } from "../../../utils";
+import ReservationModal from "./ReservationModal";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -39,26 +38,28 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const Listing = () => {
+const BillBoardListing = () => {
   const [listing, setListing] = useState([]);
+  const [location, setLocation] = useState();
+  const [board, setBoard] = useState();
 
+  const loadData = async () => {
+    try {
+      let jwt_token = localStorage.getItem("token") || null;
+      axios.defaults.headers.common["x-auth-token"] = jwt_token;
+
+      const response = await axios.post(
+        "http://localhost:4000/getallpublicbillboard",
+        { location }
+      );
+      setListing(response.data);
+    } catch (error) {
+      toast.error(error.message, toastSetting);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let jwt_token = localStorage.getItem("token") || null;
-        axios.defaults.headers.common["x-auth-token"] = jwt_token;
-
-        const response = await axios.get(
-          "http://localhost:4000/api/getallbillboard"
-        );
-        setListing(response.data);
-      } catch (error) {
-        toast.error(error.message, toastSetting);
-      }
-    };
-
-    fetchData();
-  }, []);
+    loadData();
+  }, [location]);
 
   // const [tableData, setTableData] = useState([2]);
   const [page, setPage] = useState(0);
@@ -76,20 +77,46 @@ const Listing = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  {
-    /******************  Pagination States  **************************/
-  }
+
+  const [showModal, setShowModal] = useState(false);
+  const handleShowModal = (selectedBoard) => {
+    setBoard(selectedBoard);
+    setShowModal(true);
+  };
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
   return (
     <>
       <div className="row">
         <div className="col-12 col-md-2">
-          <Adminsidebar />
+          <Usersidebar />
         </div>
+        <ReservationModal
+          billBoard={board}
+          showModal={showModal}
+          handleCloseModal={handleCloseModal}
+          handleReload={loadData}
+        />
 
         <div className="col-12 col-md-9 mx-2">
-          <h1 className="my-4 dasHeader">Dashboard</h1>
-
+          <h1 className="my-4 dasHeader">Billboards</h1>
+          <input
+            type="text"
+            placeholder="Search location"
+            style={{
+              height: "45px",
+              backgroundColor: "white",
+              border: "2px solid black",
+              padding: "10px 5px",
+              marginBottom: "10px",
+              borderRadius: "5px",
+              width: "100%",
+            }}
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+          />
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
               <TableHead>
@@ -114,7 +141,6 @@ const Listing = () => {
               </TableHead>
               <TableBody>
                 {listing.slice(startIndex, endIndex).map((item, i) => {
-                  console.log({ item });
                   return (
                     <StyledTableRow key={i}>
                       <StyledTableCell component="th" scope="row">
@@ -144,17 +170,9 @@ const Listing = () => {
                       </StyledTableCell>
 
                       <StyledTableCell align="right">
-                        {" "}
-                        <Button>
-                          {" "}
-                          Delete
-                          <DeleteIcon />
-                        </Button>{" "}
-                        &nbsp; &nbsp;
-                        {/******************  Update Dialog Start  **************************/}
-                        <Button>
-                          Edit
-                          <EditIcon />
+                        <Button onClick={() => handleShowModal(item)}>
+                          Reserve
+                          <AccessibilityRoundedIcon />
                         </Button>
                       </StyledTableCell>
                     </StyledTableRow>
@@ -173,11 +191,10 @@ const Listing = () => {
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
           </TableContainer>
-          {/******************  Pagination End  **************************/}
         </div>
       </div>
     </>
   );
 };
 
-export default Listing;
+export default BillBoardListing;

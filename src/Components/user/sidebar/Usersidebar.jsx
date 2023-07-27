@@ -64,11 +64,21 @@ function Usersidebar() {
                   <i className="fas fa-tachometer-alt  " /> Profile
                 </a>
               </li>
+
+              <Link to="/billBoardListing">
+                <li>
+                  <a href="#" className="sidebarHeader">
+                    <i className="fas fa-tachometer-alt  " />
+                    Reserve Billboard
+                  </a>
+                </li>
+              </Link>
+
               <Link to="/reserve">
                 <li>
                   <a href="#" className="sidebarHeader">
                     <i className="fas fa-tachometer-alt  " />
-                    Reserve
+                    Reservations
                   </a>
                 </li>
               </Link>

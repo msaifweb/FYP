@@ -3,17 +3,20 @@ import axios from "axios";
 import "./addproduct.css";
 import Adminsidebar from "../sidebar/Adminsidebar";
 import jwtDecode from "jwt-decode";
-
+import { toast } from "react-hot-toast";
+import { toastSetting } from "../../../utils";
 const Addproduct = () => {
   let jwt_token = localStorage.getItem("token") || null;
   const { id } = jwtDecode(jwt_token);
 
   const [formData, setFormData] = useState({
+    name: "",
+    description: "",
     location: "",
     size: "",
     perDayRate: 0,
-    // status: "",
     image: "",
+    userId: id,
   });
 
   const handleChange = (e) => {
@@ -31,64 +34,19 @@ const Addproduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    //   const formDataToSend = new FormData();
-    //   formDataToSend.append("location", location);
-    //   formDataToSend.append("size", size);
-    //   formDataToSend.append("perDayRate", perDayRate);
-    //   formDataToSend.append("image", image);
-
     Adddata(formData);
   };
 
   const Adddata = async (userData) => {
+    let jwt_token = localStorage.getItem("token") || null;
+    axios.defaults.headers.common["x-auth-token"] = jwt_token;
     try {
-      const response = await axios.post(
-        "http://localhost:4000/api/createbillboard",
-        userData
-        // {
-        //   headers: {
-        //     "Content-Type": "multipart/form-data", // Important! Set the content type to multipart/form-data for file upload
-        //   },
-        // }
-      );
-
-      console.log("User signed up successfully:", response.data);
+      await axios.post("http://localhost:4000/api/createbillboard", userData);
+      toast.success("Billboard successfully saved", toastSetting);
     } catch (error) {
-      console.error("Error signing up user:", error.response.data);
+      toast.error(error.message, toastSetting);
     }
-    // };
-    // Adddata(formData);
   };
-
-  // const Adddata = async (userData) => {
-  //   let jwt_token = localStorage.getItem("token") || null;
-  //   axios.defaults.headers.common["x-auth-token"] = jwt_token;
-  //   console.log(jwt_token);
-  //   try {
-  //     const response = await axios.post(
-  //       "http://localhost:4000/api/createbillboard",
-  //       userData
-  //       // {
-  //       //   headers: {
-  //       //     "Content-Type": "multipart/form-data", // Important! Set the content type to multipart/form-data for file upload
-  //       //   },
-  //       // }
-  //     );
-  //     // let jwt_token = localStorage.getItem("token") || null;
-  //     // axios.defaults.headers.common["x-auth-token"] = jwt_token;
-  //     // console.log(jwt_token);
-  //     console.log("User signed up successfully:", response.data);
-  //     // setFormData({
-  //     //   location: "",
-  //     //   size: "",
-  //     //   perDayRate: "",
-  //     //   image: "",
-  //     // });
-  //   } catch (error) {
-  //     console.error("Error signing up user:", error.response.data);
-  //   }
-  // };
 
   return (
     <div className="row">
@@ -98,9 +56,39 @@ const Addproduct = () => {
 
       <div className="col-12 col-md-9 mx-2">
         <div className="container addPro shadow-lg">
-          {/* <img src={image} alt="" /> */}
           <h1>Add New Billboard</h1>
           <form onSubmit={handleSubmit} enctype="multipart/form-data">
+            <div className="mb-3">
+              <label htmlFor="name" className="form-label">
+                Name:
+              </label>
+              <input
+                type="text"
+                id="name"
+                className="form-control"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Name"
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="description" className="form-label">
+                Description:
+              </label>
+              <input
+                type="text"
+                id="description"
+                className="form-control"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                placeholder="Description"
+                required
+              />
+            </div>
+
             <div className="mb-3">
               <label htmlFor="location" className="form-label">
                 Location:
