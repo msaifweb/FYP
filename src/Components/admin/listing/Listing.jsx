@@ -19,7 +19,7 @@ import Adminsidebar from "../sidebar/Adminsidebar";
 import { toast } from "react-hot-toast";
 import { toastSetting } from "../../../utils";
 import { Link } from "react-router-dom";
-import { jwtDecoded, jwt_token } from "../../utils";
+import jwtDecode from "jwt-decode";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -44,6 +44,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const Listing = () => {
   const [listing, setListing] = useState([]);
   const [location, setLocation] = useState();
+  const jwt_token = localStorage.getItem("token") || null;
+  const { id } = jwtDecode(jwt_token);
+
   const loadData = async () => {
     try {
       axios.defaults.headers.common["x-auth-token"] = jwt_token;
@@ -52,10 +55,9 @@ const Listing = () => {
         "http://localhost:4000/api/getallbillboard",
         { location }
       );
-      const { id } = jwtDecoded();
       const newData =
         response.data.length > 0
-          ? response.data.filter((reservation) => reservation?.user === id)
+          ? response.data.filter((reservation) => reservation?.user?._id === id)
           : [];
 
       setListing(newData);
@@ -155,18 +157,11 @@ const Listing = () => {
                           src={item.image}
                           alt={item.location}
                           width={150}
-                          height={150}
+                          height={100}
                         />
                       </StyledTableCell>
 
                       <StyledTableCell>
-                        {/* {" "}
-                        <Button>
-                          {" "}
-                          Delete
-                          <DeleteIcon />
-                        </Button>{" "}
-                        &nbsp; &nbsp; */}
                         <Link to="/addproduct" state={{ item }}>
                           <Button variant="primary">
                             Edit

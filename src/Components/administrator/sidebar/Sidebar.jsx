@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import Avatar from "@mui/material/Avatar";
-import { jwtDecoded } from "../../utils";
-
+import jwtDecode from "jwt-decode";
 function Sidebar() {
-  const user = jwtDecoded();
+  const jwt_token = localStorage.getItem("token") || null;
+  const user = jwtDecode(jwt_token);
 
   const [showModal, setShowModal] = useState(false);
 

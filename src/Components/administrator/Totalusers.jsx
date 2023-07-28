@@ -51,7 +51,6 @@ const Totalusers = () => {
     try {
       let jwt_token = localStorage.getItem("token") || null;
       axios.defaults.headers.common["x-auth-token"] = jwt_token;
-      console.log(jwt_token);
 
       const response = await axios.get("http://localhost:4000/api/getallusers");
       setData(response.data);
@@ -82,7 +81,6 @@ const Totalusers = () => {
 
   const handleShowModal = (item) => {
     setUpdateData(item);
-    console.log(item._id);
 
     setShowModal(true);
   };

@@ -12,7 +12,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { TableHead, TablePagination } from "@mui/material";
 import Sidebar from "../sidebar/Sidebar";
-import { jwt_token } from "../../utils";
+
 import { toastSetting } from "../../../utils";
 import { toast } from "react-hot-toast";
 
@@ -37,6 +37,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const Totaladmin = () => {
+  const jwt_token = localStorage.getItem("token") || null;
+
   const [data, setData] = useState([]);
 
   useEffect(() => {

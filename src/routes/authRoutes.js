@@ -15,7 +15,6 @@ import AdministratorReserve from "../Components/administrator/reserves/Administr
 import AdministratorListing from "../Components/administrator/administratorListing/AdministratorListing";
 
 const isLoggedIn = () => localStorage.getItem("token") || null;
-
 const getAuthRoutes = () => ({
   path: "",
   element: isLoggedIn() ? <Outlet /> : <Navigate to="/usersignin" />,

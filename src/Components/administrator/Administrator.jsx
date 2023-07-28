@@ -5,9 +5,8 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { toastSetting } from "../../utils";
 import { Link } from "react-router-dom";
-import { jwt_token } from "../utils";
-
 const Administrator = () => {
+  const jwt_token = localStorage.getItem("token") || null;
   const [totalReservations, setTotalReservations] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
   const [listing, setListing] = useState(0);

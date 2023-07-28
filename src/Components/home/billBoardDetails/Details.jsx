@@ -9,30 +9,30 @@ const Details = () => {
     <div>
       <div className="row f-flex justify-content-around ">
         <div className="col-12 col-lg-5 detailImage" id="product_image">
-          <img src={product.image} alt="sdf" height={450} width={500} />
+          <img src={product?.image} alt="sdf" height={450} width={500} />
         </div>
         <div className="col-12 col-lg-5 mt-5">
-          <h3>{product.name}</h3>
+          <h3>{product?.name}</h3>
           <hr />
           <div>
             <h3>Location:</h3>
-            <h6>{product.location}</h6>
+            <h6>{product?.location}</h6>
           </div>
           <hr />
           <div>
             <h3>Dimsensions:</h3>
-            <h6>{product.size} Feet </h6>
+            <h6>{product?.size} Feet </h6>
           </div>
           <hr />
           <div>
             <h6 id="product_price">
               <span>Price: </span>
-              {product.perDayRate}
+              {product?.perDayRate}
             </h6>
           </div>
           <hr />
           <h4 className="mt-2 description">Description:</h4>
-          <p>{product.description}</p>
+          <p>{product?.description}</p>
           <Link to="/billBoardListing">
             <button
               type="button"

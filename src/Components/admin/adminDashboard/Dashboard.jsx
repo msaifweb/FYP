@@ -5,11 +5,15 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { toastSetting } from "../../../utils";
 import { Link } from "react-router-dom";
-import { jwtDecoded, jwt_token } from "../../utils";
+import jwtDecode from "jwt-decode";
+
 const DashBoard = () => {
   const [totalReservations, setTotalReservations] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
   const [listing, setListing] = useState(0);
+
+  const jwt_token = localStorage.getItem("token") || null;
+  const { id } = jwtDecode(jwt_token);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,12 +24,10 @@ const DashBoard = () => {
           "http://localhost:4000/api/getallreservation"
         );
 
-        const { id } = jwtDecoded();
-
         const newData =
           response.data.length > 0
             ? response.data.filter(
-                (reservation) => reservation?.billBoard.user === id
+                (reservation) => reservation?.billBoard?.user._id === id
               )
             : [];
 
@@ -36,7 +38,7 @@ const DashBoard = () => {
         const billBoardData =
           billBoardResponse.data.length > 0
             ? billBoardResponse.data.filter(
-                (reservation) => reservation?.user === id
+                (reservation) => reservation?.user?._id === id
               )
             : [];
 

@@ -13,7 +13,6 @@ import Adminsidebar from "../sidebar/Sidebar";
 import { format, parseISO } from "date-fns";
 import { toast } from "react-hot-toast";
 import { toastSetting } from "../../../utils";
-import { jwtDecoded, jwt_token } from "../../utils";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -36,6 +35,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const AdministratorReserve = () => {
+  const jwt_token = localStorage.getItem("token") || null;
   const [data, setData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -137,7 +137,7 @@ const AdministratorReserve = () => {
                           src={item.billBoard.image}
                           alt={item.billBoard.location}
                           width={150}
-                          height={150}
+                          height={100}
                         />
                       </StyledTableCell>
                       <StyledTableCell>

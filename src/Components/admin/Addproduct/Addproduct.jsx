@@ -5,11 +5,12 @@ import Adminsidebar from "../sidebar/Adminsidebar";
 import { toast } from "react-hot-toast";
 import { toastSetting } from "../../../utils";
 import { useLocation } from "react-router-dom";
-import { jwtDecoded, jwt_token } from "../../utils";
+import jwtDecode from "jwt-decode";
 
 const Addproduct = () => {
-  const { id } = jwtDecoded();
+  const jwt_token = localStorage.getItem("token") || null;
 
+  const { id } = jwtDecode(jwt_token);
   const location = useLocation();
   const item = location?.state?.item;
   const options = ["Available", "Booked"];

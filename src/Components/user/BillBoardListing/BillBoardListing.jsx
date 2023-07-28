@@ -17,7 +17,6 @@ import Usersidebar from "../sidebar/Usersidebar";
 import { toast } from "react-hot-toast";
 import { toastSetting } from "../../../utils";
 import ReservationModal from "./ReservationModal";
-import { jwt_token } from "../../utils";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -40,6 +39,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const BillBoardListing = () => {
+  const jwt_token = localStorage.getItem("token") || null;
+
   const [listing, setListing] = useState([]);
   const [location, setLocation] = useState();
   const [board, setBoard] = useState();
@@ -170,7 +171,7 @@ const BillBoardListing = () => {
                           src={item.image}
                           alt={item.location}
                           width={150}
-                          height={150}
+                          height={100}
                         />
                       </StyledTableCell>
 

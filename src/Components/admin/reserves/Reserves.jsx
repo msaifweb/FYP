@@ -13,7 +13,7 @@ import Adminsidebar from "../sidebar/Adminsidebar";
 import { format, parseISO } from "date-fns";
 import { toast } from "react-hot-toast";
 import { toastSetting } from "../../../utils";
-import { jwtDecoded, jwt_token } from "../../utils";
+import jwtDecode from "jwt-decode";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -37,6 +37,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const Reserve = () => {
   const [data, setData] = useState([]);
+  const jwt_token = localStorage.getItem("token") || null;
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -46,12 +47,12 @@ const Reserve = () => {
           "http://localhost:4000/api/getallreservation"
         );
 
-        const { id } = jwtDecoded();
+        const { id } = jwtDecode(jwt_token);
 
         const newData =
           response.data.length > 0
             ? response.data.filter(
-                (reservation) => reservation?.billBoard.user === id
+                (reservation) => reservation?.billBoard?.user?._id === id
               )
             : [];
         setData(newData);
@@ -137,7 +138,7 @@ const Reserve = () => {
                           src={item.billBoard.image}
                           alt={item.billBoard.location}
                           width={150}
-                          height={150}
+                          height={100}
                         />
                       </StyledTableCell>
                       <StyledTableCell>

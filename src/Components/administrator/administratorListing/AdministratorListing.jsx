@@ -11,15 +11,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { TablePagination } from "@mui/material";
 import Adminsidebar from "../sidebar/Sidebar";
 import { toast } from "react-hot-toast";
 import { toastSetting } from "../../../utils";
-import { Link } from "react-router-dom";
-import { jwtDecoded, jwt_token } from "../../utils";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -42,6 +37,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const AdministratorListing = () => {
+  const jwt_token = localStorage.getItem("token") || null;
   const [listing, setListing] = useState([]);
   const [location, setLocation] = useState();
   const loadData = async () => {
@@ -156,7 +152,7 @@ const AdministratorListing = () => {
                           src={item.image}
                           alt={item.location}
                           width={150}
-                          height={150}
+                          height={100}
                         />
                       </StyledTableCell>
                     </StyledTableRow>
