@@ -55,6 +55,7 @@ export default function Usersignin() {
         toast.success("Login Successfuly!", toastSetting);
         localStorage.setItem("token", res.data);
         const { role } = jwtDecode(res.data);
+        console.log({ role });
         navigate(role === "Admin" ? "/admin" : "/UserDashboard");
       })
       .catch((err) => toast.error(err.message, toastSetting));

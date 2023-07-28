@@ -2,10 +2,18 @@ import Usersignup from "../Components/user/userregister/Usersignup";
 import Usersignin from "../Components/user/userregister/Usersignin";
 import NotFoundView from "../Components/common/notFound";
 import { Navigate, Outlet } from "react-router-dom";
-import { isLoggedIn } from "../Components/utils";
+import { isLoggedIn, isUser } from "../Components/utils";
 
 const getUnAuthRoutes = () => ({
-  element: !isLoggedIn() ? <Outlet /> : <Navigate to="/userDashboard" />,
+  element: !isLoggedIn() ? (
+    <Outlet />
+  ) : isUser() === "Admin" ? (
+    <Navigate to="/admin" />
+  ) : isUser() === "Administrator" ? (
+    <Navigate to="/administrator" />
+  ) : (
+    <Navigate to="/userDashboard" />
+  ),
 
   children: [
     { path: "*", element: <NotFoundView /> },
