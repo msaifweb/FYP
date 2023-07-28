@@ -1,12 +1,28 @@
 import "./administrator.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Modal, Button } from "react-bootstrap";
 import Avatar from "@mui/material/Avatar";
 import Sidebar from "./sidebar/Sidebar";
-
 const Administrator = () => {
   const [showModal, setShowModal] = useState(false);
+  const [data, setData] = useState([]);
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+  const fetchData = async () => {
+    try {
+      let jwt_token = localStorage.getItem("token") || null;
+      axios.defaults.headers.common["x-auth-token"] = jwt_token;
+      console.log(jwt_token);
+
+      const response = await axios.get("http://localhost:4000/api/getallusers");
+      setData(response.data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   const handleShowModal = () => {
     setShowModal(true);
   };
@@ -105,7 +121,7 @@ const Administrator = () => {
                 <div className="card-body1">
                   <div className="text-center card-font-size">
                     Users
-                    <br /> <b>45</b>
+                    <br /> <b>{data.length}</b>
                   </div>
                 </div>
                 <a

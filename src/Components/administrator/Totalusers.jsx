@@ -19,9 +19,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import TextField from "@mui/material/TextField";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
+
 import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import { Container } from "@mui/material";
@@ -30,7 +28,10 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Avatar from "@mui/material/Avatar";
 import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
-
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
 import Sidebar from "./sidebar/Sidebar";
 const theme = createTheme();
 // import Typography from "@mui/material/Typography";
@@ -55,75 +56,112 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-// const handleSubmit = async (id) => {
-
-// // };
-
 const Totalusers = () => {
-  const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
-  // console.log(data);
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:4000/api/getallusers")
-  //     .then((response) => {
-  //       setData(response.data);
-  //     })
-  //     .catch((error) => {
-  //       setError(error.message);
-  //     });
-  //   let jwt_token = localStorage.getItem("token") || null;
-  //   axios.defaults.headers.common["x-auth-token"] = jwt_token;
-  // }, []);
+  const [editData, setEditData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    role: "",
+  });
+
+  const [open, setOpen] = React.useState(false);
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let jwt_token = localStorage.getItem("token") || null;
-        axios.defaults.headers.common["x-auth-token"] = jwt_token;
-        console.log(jwt_token);
-
-        const response = await axios.get(
-          "http://localhost:4000/api/getallusers"
-        );
-        setData(response.data);
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-
     fetchData();
   }, []);
+  const fetchData = async () => {
+    try {
+      let jwt_token = localStorage.getItem("token") || null;
+      axios.defaults.headers.common["x-auth-token"] = jwt_token;
+      console.log(jwt_token);
 
-  const handleShowModal = (item) => {
-    setUpdateData(item);
-
-    setShowModal(true);
+      const response = await axios.get("http://localhost:4000/api/getallusers");
+      setData(response.data);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
-  const handleCloseModal = () => {
-    setShowModal(false);
+  // const handleUpdate = async (item, updatedData) => {
+  //   try {
+  //     let jwt_token = localStorage.getItem("token") || null;
+  //     axios.defaults.headers.common["x-auth-token"] = jwt_token;
+  //     console.log(jwt_token);
+  //     console.log(item._id);
+  //     // const response = await
+  //     // axios.put(`http://localhost:4000/api/updateuser/${item._id}`);
+  //     axios.put("http://localhost:4000/api/updateuser/", {
+  //       id: item.id,
+  //     });
+  //     // const updatedList = data.map((item) =>
+  //     //   item._id === id ? response.data : item
+  //     // );
+  //     // setData(updatedList);
+  //     // fetchData();
+  //   } catch (error) {
+  //     setError("An error occurred while updating data.");
+  //   }
+  // };
+  // const handleClickOpen = (item) => {
+  //   setEditData(item);
+
+  //   setOpen(true);
+  // };
+
+  // const handleClickOpen = () => {
+  //   setOpenDialog(true);
+  //   setFormData({
+  //     name: "",
+  //     email: "",
+  //     phone: "",
+  //     role: "",
+  //   });
+  // };
+
+  const handleEditUser = (item) => {
+    // setOpenDialog(true);
+    setOpen(true);
+    setEditData({
+      name: item.name,
+      email: item.email,
+      phone: item.phone,
+      role: item.role,
+    });
+    console.log(item);
   };
 
-  const handleSubmit = (e) => {
+  const handleUpdate = async (item) => {
+    let jwt_token = localStorage.getItem("token") || null;
+    axios.defaults.headers.common["x-auth-token"] = jwt_token;
+    console.log(jwt_token);
+    console.log(item._id);
+    try {
+      await axios
+        .put(`http://localhost:4000/api/updateuser/${item._id}`, editData)
+        .then((res) => {
+          fetchData();
+          console.log(res);
+        });
+
+      // fetchData();
+
+      // console.log(setEditData);
+      // // });
+      // console.log(item.id);
+      // // );
+    } catch (error) {
+      console.error("Error updating user:", error);
+    }
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    axios
-      .put(`http://localhost:4000/api/updateuser`)
-      .then(() => {
-        // setEditingUser(null);
-        // getUsers();
-      })
-      .catch((error) => {
-        console.error("Error updating user:", error.response.data);
-      });
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUpdateData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
   };
 
   {
@@ -158,7 +196,7 @@ const Totalusers = () => {
         </div>
 
         <div className="col-12 col-md-9 mx-2">
-          <h1 className="my-4 dasHeader">Dashboard</h1>
+          <h1 className="my-4 dasHeader">Dashboard {data.length}</h1>
 
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -166,7 +204,7 @@ const Totalusers = () => {
                 {data.slice(startIndex, endIndex).map((item, i) => {
                   return (
                     <StyledTableRow key={i}>
-                      <StyledTableCell align="left">{item.id}</StyledTableCell>
+                      <StyledTableCell align="left">{item._id}</StyledTableCell>
                       <StyledTableCell component="th" scope="row">
                         {item.name}
                       </StyledTableCell>
@@ -183,79 +221,124 @@ const Totalusers = () => {
                         {item.role}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        <Button>
+                        <Button
+                        // onClick={() => handleDelete(item._id)}
+                        >
                           Delete
                           <DeleteIcon />
                         </Button>
                         &nbsp; &nbsp;
                         {/******************  Update Dialog Start  **************************/}
                         <Button
-                          onClick={() => handleShowModal(item.id)}
+                          // onClick={() => handleClickOpen(item)}
+                          onClick={() => handleEditUser(item)}
                           // onClick={handleShowModal}
                         >
                           Edit
                           <EditIcon />
                         </Button>
-                      </StyledTableCell>
-
-                      {/* <button onClick={handleShowModal}>Details</button> */}
-
-                      <Modal show={showModal} onHide={handleCloseModal}>
-                        <Modal.Header closeButton>
-                          <Modal.Title>Update Data</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                          {/* Content of the modal */}
-                          {/* Add your form fields or any other content here */}
-                          <ThemeProvider theme={theme}>
-                            <Container component="main" maxWidth="xs">
-                              <CssBaseline />
-                              <Box
-                                sx={{
-                                  marginTop: 0,
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  alignItems: "center",
-                                }}
-                              >
-                                {/* <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                        <Dialog open={open} onClose={handleClose}>
+                          <DialogTitle>Update Profile</DialogTitle>
+                          <DialogContent>
+                            <ThemeProvider theme={theme}>
+                              <Container component="main" maxWidth="xs">
+                                <CssBaseline />
+                                <Box
+                                  sx={{
+                                    marginTop: 0,
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  {/* <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
                 </Avatar>
                 <Typography component="h1" variant="h5">
                   Sign In
                 </Typography> */}
-                                <Box
-                                  component="form"
-                                  noValidate
-                                  onSubmit={handleSubmit}
-                                  sx={{ mt: 3 }}
-                                >
-                                  <Grid container spacing={2}>
-                                    <Grid item xs={12}>
-                                      <TextField
-                                        required
-                                        fullWidth
-                                        id="name"
-                                        label="Name"
-                                        name="name"
-                                        value={updateData.name}
-                                        onChange={handleChange}
+                                  <Box
+                                    component="form"
+                                    noValidate
+                                    onSubmit={handleSubmit}
+                                    sx={{ mt: 3 }}
+                                  >
+                                    <Grid container spacing={2}>
+                                      <Grid item xs={12}>
+                                        <TextField
+                                          required
+                                          fullWidth
+                                          id="userName"
+                                          label="name"
+                                          name="Name"
+                                          // value={updateData.name}
+                                          // onChange={handleChange}
+                                          value={editData.name}
+                                          onChange={(e) =>
+                                            setEditData({
+                                              ...editData,
+                                              name: e.target.value,
+                                            })
+                                          }
+                                          // autoComplete="email"
+                                        />
+                                      </Grid>
+                                      <Grid item xs={12}>
+                                        <TextField
+                                          required
+                                          fullWidth
+                                          name="phone"
+                                          label="Phone"
+                                          value={editData.phone}
+                                          onChange={(e) =>
+                                            setEditData({
+                                              ...editData,
+                                              phone: e.target.value,
+                                            })
+                                          }
+                                          // type=""
+                                          // value={updateData.phone}
+                                          // onChange={handleChange}
+                                        />
+                                      </Grid>
+                                      <Grid item xs={12}>
+                                        <TextField
+                                          required
+                                          fullWidth
+                                          name="phone"
+                                          label="Phone"
+                                          value={editData.email}
+                                          onChange={(e) =>
+                                            setEditData({
+                                              ...editData,
+                                              email: e.target.value,
+                                            })
+                                          }
+                                          // type=""
+                                          // value={updateData.phone}
+                                          // onChange={handleChange}
+                                        />
+                                      </Grid>
 
-                                        // autoComplete="email"
-                                      />
-                                    </Grid>
+                                      <Grid item xs={12}>
+                                        <TextField
+                                          required
+                                          fullWidth
+                                          name="phone"
+                                          label="Phone"
+                                          value={editData.role}
+                                          onChange={(e) =>
+                                            setEditData({
+                                              ...editData,
+                                              role: e.target.value,
+                                            })
+                                          }
+                                          // type=""
+                                          // value={updateData.phone}
+                                          // onChange={handleChange}
+                                        />
+                                      </Grid>
 
-                                    <Grid item xs={12}>
-                                      <TextField
-                                        required
-                                        fullWidth
-                                        name="phone"
-                                        label="Phone"
-                                        // type=""
-                                        value={updateData.phone}
-                                        onChange={handleChange}
-                                      />
-                                    </Grid>
-                                    {/* <Grid item xs={12}>
+                                      {/* <Grid item xs={12}>
                 <FormControlLabel
                   control={
                     <Checkbox value="allowExtraEmails" color="primary" />
@@ -263,35 +346,43 @@ const Totalusers = () => {
                   label="I want to receive inspiration, marketing promotions and updates via email."
                 />
               </Grid> */}
-                                  </Grid>
-                                  <Button
-                                    type="submit"
-                                    fullWidth
-                                    variant="contained"
-                                    sx={{ mt: 3, mb: 2 }}
-                                  >
-                                    Update{" "}
-                                  </Button>
+                                    </Grid>
+                                    <Button
+                                      // type="submit"
+                                      fullWidth
+                                      variant="contained"
+                                      sx={{ mt: 3, mb: 2 }}
+                                      onClick={() => {
+                                        handleUpdate(item, editData);
+                                      }}
+                                    >
+                                      Update{" "}
+                                    </Button>
+                                  </Box>
                                 </Box>
-                              </Box>
-                            </Container>
-                          </ThemeProvider>
-                        </Modal.Body>
-                        <Modal.Footer>
-                          <Button
-                            variant="secondary"
-                            onClick={handleCloseModal}
-                          >
-                            Close
-                          </Button>
-                          {/* <Button variant="primary">Add Billboard</Button> */}
-                        </Modal.Footer>
-                      </Modal>
+                              </Container>
+                            </ThemeProvider>
+                          </DialogContent>
+                          <DialogActions>
+                            <Button onClick={handleClose}>Cancel</Button>
+                            {/* <Button onClick={handleClose}>Subscribe</Button> */}
+                          </DialogActions>
+                        </Dialog>
+                      </StyledTableCell>
+
+                      {/* <button onClick={handleShowModal}>Details</button> */}
                     </StyledTableRow>
                   );
                 })}
               </TableBody>
             </Table>
+
+            <>
+              {/* <Button variant="outlined" onClick={handleClickOpen}>
+                  // Open form dialog //{" "}
+                </Button> */}
+            </>
+
             {/******************  Pagination Start  **************************/}
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
