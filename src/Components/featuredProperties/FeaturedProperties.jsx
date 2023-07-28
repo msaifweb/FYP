@@ -16,7 +16,7 @@ const FeaturedProperties = () => {
         <div className="fp mt-5">
           <div className="fpItem">
             <img src={billboard} alt="Billboard-1" className="fpImg" />
-            <span className="fpName ">BillBoard with LED Lights</span>
+            <span className="fpName ">Billboard with LED Lights</span>
             <span className="fpCity ">DHA Phase VI</span>
             <span className="fpPrice">Starting from 750 </span>
             <div className="fpRating">
@@ -26,7 +26,7 @@ const FeaturedProperties = () => {
           </div>
           <div className="fpItem">
             <img src={billboard} alt="" className="fpImg" />
-            <span className="fpName">BillBoard with LED Lights</span>
+            <span className="fpName">Billboard with LED Lights</span>
             <span className="fpCity">DHA Phase VI</span>
             <span className="fpPrice">Starting from 1000</span>
             <div className="fpRating">
@@ -36,7 +36,7 @@ const FeaturedProperties = () => {
           </div>
           <div className="fpItem">
             <img src={billboard} alt="" className="fpImg" />
-            <span className="fpName">BillBoard with LED Lights</span>
+            <span className="fpName">Billboard with LED Lights</span>
             <span className="fpCity">Bahria Town</span>
             <span className="fpPrice">Starting from 999</span>
             <div className="fpRating">
@@ -46,7 +46,7 @@ const FeaturedProperties = () => {
           </div>
           <div className="fpItem">
             <img src={billboard} alt="billBoard" className="fpImg" />
-            <span className="fpName">BillBoard with LED Lights</span>
+            <span className="fpName">Billboard with LED Lights</span>
             <span className="fpCity">Gulberg</span>
             <span className="fpPrice">Starting from 900</span>
             <div className="fpRating">

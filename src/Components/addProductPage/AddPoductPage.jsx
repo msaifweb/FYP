@@ -9,7 +9,7 @@ const AddProductPage = () => {
   const [height, setHeight] = useState("");
   const [width, setWidth] = useState("");
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState("");
 
   const handleBillboardNameChange = (e) => {
     setBillboardName(e.target.value);
@@ -39,9 +39,9 @@ const AddProductPage = () => {
     setDescription(e.target.value);
   };
 
-   const handleImageChange = (e) => {
-     setImage(e.target.value);
-   };
+  const handleImageChange = (e) => {
+    setImage(e.target.value);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -66,7 +66,7 @@ const AddProductPage = () => {
     setHeight("");
     setWidth("");
     setDescription("");
-     setImage("");
+    setImage("");
 
     // Example: Display the billboard data in the console
     console.log(billboardData);
@@ -167,7 +167,7 @@ const AddProductPage = () => {
         </div>
         <div className="mb-3">
           <label htmlFor="image" className="form-label">
-            BillBoard Image:
+            Billboard Image:
           </label>
           <input
             type="file"

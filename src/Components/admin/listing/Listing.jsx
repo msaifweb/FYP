@@ -43,32 +43,30 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const Listing = () => {
   const [listing, setListing] = useState([]);
+  const [location, setLocation] = useState();
+  const loadData = async () => {
+    try {
+      let jwt_token = localStorage.getItem("token") || null;
+      axios.defaults.headers.common["x-auth-token"] = jwt_token;
 
+      const response = await axios.post(
+        "http://localhost:4000/api/getallbillboard",
+        { location }
+      );
+      const { id } = jwtDecode(jwt_token);
+      const newData =
+        response.data.length > 0
+          ? response.data.filter((reservation) => reservation?.user === id)
+          : [];
+
+      setListing(newData);
+    } catch (error) {
+      toast.error(error.message, toastSetting);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let jwt_token = localStorage.getItem("token") || null;
-        axios.defaults.headers.common["x-auth-token"] = jwt_token;
-
-        const response = await axios.get(
-          "http://localhost:4000/api/getallbillboard"
-        );
-
-        const { id } = jwtDecode(jwt_token);
-        console.log({ first: response.data });
-        const newData =
-          response.data.length > 0
-            ? response.data.filter((reservation) => reservation?.user === id)
-            : [];
-
-        setListing(newData);
-      } catch (error) {
-        toast.error(error.message, toastSetting);
-      }
-    };
-
-    fetchData();
-  }, []);
+    loadData();
+  }, [location]);
 
   // const [tableData, setTableData] = useState([2]);
   const [page, setPage] = useState(0);
@@ -98,8 +96,22 @@ const Listing = () => {
         </div>
 
         <div className="col-12 col-md-9 mx-2">
-          <h1 className="my-4 dasHeader">Dashboard</h1>
-
+          <h1 className="my-4 dasHeader">Billboards</h1>
+          <input
+            type="text"
+            placeholder="Search location"
+            style={{
+              height: "45px",
+              backgroundColor: "white",
+              border: "2px solid black",
+              padding: "10px 5px",
+              marginBottom: "10px",
+              borderRadius: "5px",
+              width: "100%",
+            }}
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+          />
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
               <TableHead>
