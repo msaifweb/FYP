@@ -13,6 +13,7 @@ import Reserves from "../Components/admin/reserves/Reserves";
 import Totaladmin from "../Components/administrator/totaladmin/Totaladmin";
 import LandingPage from "../Components/landingpage/LandingPage";
 import { isUser } from "../Components/utils";
+import PaymentPage from "../Components/payment/Payment";
 
 const isLoggedIn = () => localStorage.getItem("token") || null;
 
@@ -21,6 +22,7 @@ const getAuthRoutes = () => ({
   element: isLoggedIn() ? <Outlet /> : <Navigate to="/usersignin" />,
   children: [
     { path: "/home", element: <LandingPage /> },
+    { path: "/payment", element: <PaymentPage /> },
 
     {
       path: "/administrator",

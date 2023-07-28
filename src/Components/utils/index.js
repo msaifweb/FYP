@@ -5,5 +5,5 @@ const isUser = () => {
   const user = jwtDecode(token);
   return user?.role;
 };
-
+console.log({ user: isUser() });
 export { isUser };
