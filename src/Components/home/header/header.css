@@ -1,17 +1,17 @@
-*{
- box-sizing: border-box;
- margin: 0;
- padding: 0; 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-.logo{
+.logo {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   margin-left: 12px;
   font-weight: bold;
 }
-.navbar{
-    background-color: #003580;
-    color: white;
-    display: flex;
+.navbar {
+  background-color: #003580;
+  color: white;
+  display: flex;
 }
 .header {
   background-color: #003580;
@@ -59,13 +59,13 @@
   font-weight: 500;
   border: none;
   padding: 5px;
-  border-radius:5px;
+  border-radius: 5px;
   cursor: pointer;
   width: 150px;
 }
-.headerBtn:hover{
+.headerBtn:hover {
   background-color: rgb(216, 216, 216);
-  color:darkblue;
+  color: darkblue;
 }
 
 .headerSearch {

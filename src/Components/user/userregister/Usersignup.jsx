@@ -1,19 +1,18 @@
 import React from "react";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { AuthContext } from "../../AuthContext";
+import toast from "react-hot-toast";
+import { toastSetting } from "../../../utils";
 
 function Copyright(props) {
   return (
@@ -53,13 +52,10 @@ export default function Usersignup() {
 
   const signupUser = async (userData) => {
     try {
-      const response = await axios.post(
-        "http://localhost:4000/createuser",
-        userData
-      );
-      console.log("User signed up successfully:", response.data);
+      await axios.post("http://localhost:4000/createuser", userData);
+      toast.success("User signed up successfully:", toastSetting);
     } catch (error) {
-      console.error("Error signing up user:", error.response.data);
+      toast.error(error.message, toastSetting);
     }
   };
 
@@ -142,17 +138,6 @@ export default function Usersignup() {
                   onChange={handleChange}
                 />
               </Grid>
-              {/* <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="role"
-                  label="Role"
-                  // type="password"
-                  value={formData.role}
-                  onChange={handleChange}
-                />
-              </Grid> */}
             </Grid>
             <Button
               type="submit"

@@ -3,19 +3,29 @@ import axios from "axios";
 import "./addproduct.css";
 import Adminsidebar from "../sidebar/Adminsidebar";
 import jwtDecode from "jwt-decode";
+import { toast } from "react-hot-toast";
+import { toastSetting } from "../../../utils";
+import { useLocation } from "react-router-dom";
 
 const Addproduct = () => {
   let jwt_token = localStorage.getItem("token") || null;
   const { id } = jwtDecode(jwt_token);
 
+  const location = useLocation();
+  const item = location?.state?.item;
+  console.log({ item });
+  const options = ["Available", "Booked"];
   const [formData, setFormData] = useState({
-    location: "",
-    size: "",
-    perDayRate: 0,
-    // status: "",
-    image: "",
+    _id: item?._id ?? "",
+    name: item?.name ?? "",
+    description: item?.description ?? "",
+    status: item?.status ?? "Available",
+    location: item?.location ?? "",
+    size: item?.size ?? "",
+    perDayRate: item?.perDayRate ?? 0,
+    image: item?.image ?? "",
+    userId: id,
   });
-
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "image" && files && files.length > 0) {
@@ -31,64 +41,29 @@ const Addproduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    //   const formDataToSend = new FormData();
-    //   formDataToSend.append("location", location);
-    //   formDataToSend.append("size", size);
-    //   formDataToSend.append("perDayRate", perDayRate);
-    //   formDataToSend.append("image", image);
-
     Adddata(formData);
   };
 
   const Adddata = async (userData) => {
-    try {
-      const response = await axios.post(
-        "http://localhost:4000/api/createbillboard",
-        userData
-        // {
-        //   headers: {
-        //     "Content-Type": "multipart/form-data", // Important! Set the content type to multipart/form-data for file upload
-        //   },
-        // }
-      );
-
-      console.log("User signed up successfully:", response.data);
-    } catch (error) {
-      console.error("Error signing up user:", error.response.data);
+    let jwt_token = localStorage.getItem("token") || null;
+    axios.defaults.headers.common["x-auth-token"] = jwt_token;
+    console.log({ formData });
+    if (item) {
+      try {
+        await axios.put("http://localhost:4000/api/updatebillboard", userData);
+        toast.success("Billboard successfully updated", toastSetting);
+      } catch (error) {
+        toast.error(error.message, toastSetting);
+      }
+    } else {
+      try {
+        await axios.post("http://localhost:4000/api/createbillboard", userData);
+        toast.success("Billboard successfully saved", toastSetting);
+      } catch (error) {
+        toast.error(error.message, toastSetting);
+      }
     }
-    // };
-    // Adddata(formData);
   };
-
-  // const Adddata = async (userData) => {
-  //   let jwt_token = localStorage.getItem("token") || null;
-  //   axios.defaults.headers.common["x-auth-token"] = jwt_token;
-  //   console.log(jwt_token);
-  //   try {
-  //     const response = await axios.post(
-  //       "http://localhost:4000/api/createbillboard",
-  //       userData
-  //       // {
-  //       //   headers: {
-  //       //     "Content-Type": "multipart/form-data", // Important! Set the content type to multipart/form-data for file upload
-  //       //   },
-  //       // }
-  //     );
-  //     // let jwt_token = localStorage.getItem("token") || null;
-  //     // axios.defaults.headers.common["x-auth-token"] = jwt_token;
-  //     // console.log(jwt_token);
-  //     console.log("User signed up successfully:", response.data);
-  //     // setFormData({
-  //     //   location: "",
-  //     //   size: "",
-  //     //   perDayRate: "",
-  //     //   image: "",
-  //     // });
-  //   } catch (error) {
-  //     console.error("Error signing up user:", error.response.data);
-  //   }
-  // };
 
   return (
     <div className="row">
@@ -98,9 +73,39 @@ const Addproduct = () => {
 
       <div className="col-12 col-md-9 mx-2">
         <div className="container addPro shadow-lg">
-          {/* <img src={image} alt="" /> */}
           <h1>Add New Billboard</h1>
           <form onSubmit={handleSubmit} enctype="multipart/form-data">
+            <div className="mb-3">
+              <label htmlFor="name" className="form-label">
+                Name:
+              </label>
+              <input
+                type="text"
+                id="name"
+                className="form-control"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Name"
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="description" className="form-label">
+                Description:
+              </label>
+              <input
+                type="text"
+                id="description"
+                className="form-control"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                placeholder="Description"
+                required
+              />
+            </div>
+
             <div className="mb-3">
               <label htmlFor="location" className="form-label">
                 Location:
@@ -147,23 +152,55 @@ const Addproduct = () => {
             </div>
 
             <div className="mb-3">
+              <label htmlFor="status" className="form-label">
+                Status:
+              </label>
+
+              <select
+                id="status"
+                className="form-control"
+                name="status"
+                value={formData.status}
+                onChange={handleChange}
+                placeholder="Status"
+                required
+              >
+                {options.map((option, index) => {
+                  return <option key={index}>{option}</option>;
+                })}
+              </select>
+            </div>
+            <div className="mb-3">
               <label htmlFor="image" className="form-label">
                 BillBoard Image:
               </label>
               <input
-                // type="file"
                 id="image"
                 className="form-control"
                 name="image"
                 accept="image/*"
                 onChange={handleChange}
                 type="file"
-                required
+                required={!item}
               />
             </div>
-            <div>
+            {formData.image && (
+              <div className="mb-3">
+                <img
+                  src={formData.image}
+                  width={150}
+                  style={{ border: "1px solid red" }}
+                />
+              </div>
+            )}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+              }}
+            >
               <button type="submit" className="btn btn-primary">
-                Add Billboard
+                {item ? "Update Billboard" : "Add Billboard"}
               </button>
             </div>
           </form>
