@@ -2,18 +2,16 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./addproduct.css";
 import Adminsidebar from "../sidebar/Adminsidebar";
-import jwtDecode from "jwt-decode";
 import { toast } from "react-hot-toast";
 import { toastSetting } from "../../../utils";
 import { useLocation } from "react-router-dom";
+import { jwtDecoded, jwt_token } from "../../utils";
 
 const Addproduct = () => {
-  let jwt_token = localStorage.getItem("token") || null;
-  const { id } = jwtDecode(jwt_token);
+  const { id } = jwtDecoded();
 
   const location = useLocation();
   const item = location?.state?.item;
-  console.log({ item });
   const options = ["Available", "Booked"];
   const [formData, setFormData] = useState({
     _id: item?._id ?? "",
@@ -45,9 +43,7 @@ const Addproduct = () => {
   };
 
   const Adddata = async (userData) => {
-    let jwt_token = localStorage.getItem("token") || null;
     axios.defaults.headers.common["x-auth-token"] = jwt_token;
-    console.log({ formData });
     if (item) {
       try {
         await axios.put("http://localhost:4000/api/updatebillboard", userData);

@@ -17,6 +17,7 @@ import Usersidebar from "../sidebar/Usersidebar";
 import { toast } from "react-hot-toast";
 import { toastSetting } from "../../../utils";
 import ReservationModal from "./ReservationModal";
+import { jwt_token } from "../../utils";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -45,7 +46,6 @@ const BillBoardListing = () => {
 
   const loadData = async () => {
     try {
-      let jwt_token = localStorage.getItem("token") || null;
       axios.defaults.headers.common["x-auth-token"] = jwt_token;
 
       const response = await axios.post(

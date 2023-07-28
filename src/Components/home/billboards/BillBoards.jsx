@@ -32,7 +32,7 @@ const Product = ({ destination }) => {
           {billBoard &&
             billBoard.length > 0 &&
             billBoard.map((product) => (
-              <Col key={product.id} md={3} className="mx-3">
+              <Col key={product._id} md={3} className="mx-3">
                 <Card className="productCard1">
                   <Card.Img
                     style={{ width: "100%", maxHeight: "200px" }}
@@ -43,13 +43,8 @@ const Product = ({ destination }) => {
                   <Card.Body>
                     <Card.Title>{product.name}</Card.Title>
                     <Card.Text>{product.location}</Card.Text>
-                    <Card.Text>{product.perDayRate}</Card.Text>
-                    <Card.Text>Dimensions:</Card.Text>
-                    <Card.Text>{product.size}</Card.Text>
-
-                    <Card.Text>{product.description}</Card.Text>
-
-                    <Card.Text>Price: ${product.price}</Card.Text>
+                    <Card.Text>Dimensions: {product.size}</Card.Text>
+                    <Card.Text>Price: {product.perDayRate} PKR</Card.Text>
                     <Link to="/details" state={{ product }}>
                       <Button variant="primary">Details</Button>
                     </Link>

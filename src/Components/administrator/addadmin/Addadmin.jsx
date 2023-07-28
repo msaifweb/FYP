@@ -45,7 +45,6 @@ const Addadmin = () => {
     email: "",
     role: "",
   });
-  console.log({ formData });
   const handleShowModal = () => {
     setShowModal(true);
   };

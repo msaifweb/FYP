@@ -11,7 +11,7 @@ import { format, parseISO, differenceInDays } from "date-fns";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { toastSetting } from "../../../utils";
-import jwtDecode from "jwt-decode";
+import { jwtDecoded, jwt_token } from "../../utils";
 
 const ReservationModal = ({
   showModal,
@@ -59,9 +59,8 @@ const ReservationModal = ({
     };
   }, []);
   const handleReserve = async () => {
-    let jwt_token = localStorage.getItem("token") || null;
     axios.defaults.headers.common["x-auth-token"] = jwt_token;
-    const { id } = jwtDecode(jwt_token);
+    const { id } = jwtDecoded();
 
     const reservationData = {
       startDate: date[0].startDate,

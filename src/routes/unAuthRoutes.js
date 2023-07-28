@@ -2,8 +2,7 @@ import Usersignup from "../Components/user/userregister/Usersignup";
 import Usersignin from "../Components/user/userregister/Usersignin";
 import NotFoundView from "../Components/common/notFound";
 import { Navigate, Outlet } from "react-router-dom";
-
-const isLoggedIn = () => localStorage.getItem("token") || null;
+import { isLoggedIn } from "../Components/utils";
 
 const getUnAuthRoutes = () => ({
   element: !isLoggedIn() ? <Outlet /> : <Navigate to="/userDashboard" />,

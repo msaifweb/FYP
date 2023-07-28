@@ -5,11 +5,10 @@ import "./usersidebar.css";
 import { Link } from "react-router-dom";
 import { Modal, Button } from "react-bootstrap";
 import Avatar from "@mui/material/Avatar";
-import jwtDecode from "jwt-decode";
+import { jwtDecoded } from "../../utils";
 
 function Usersidebar() {
-  let jwt_token = localStorage.getItem("token") || null;
-  const user = jwtDecode(jwt_token);
+  const user = jwtDecoded();
 
   const [showModal, setShowModal] = useState(false);
 
@@ -36,7 +35,7 @@ function Usersidebar() {
             }}
           >
             <Avatar
-              alt={user.name.toUpperCase()}
+              alt={user?.name.toUpperCase()}
               src="/static/images/avatar/1.jpg"
               sx={{ width: 70, height: 70 }}
             />
@@ -44,11 +43,11 @@ function Usersidebar() {
           <br />
           <p>
             <b>Name: </b>
-            {user.name}
+            {user?.name}
           </p>
           <p>
             <b>Email: </b>
-            {user.email}
+            {user?.email}
           </p>
         </Modal.Body>
         <Modal.Footer>

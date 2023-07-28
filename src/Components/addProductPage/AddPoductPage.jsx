@@ -67,9 +67,6 @@ const AddProductPage = () => {
     setWidth("");
     setDescription("");
     setImage("");
-
-    // Example: Display the billboard data in the console
-    console.log(billboardData);
   };
 
   return (

@@ -13,7 +13,7 @@ import Adminsidebar from "../sidebar/Adminsidebar";
 import { format, parseISO } from "date-fns";
 import { toast } from "react-hot-toast";
 import { toastSetting } from "../../../utils";
-import jwtDecode from "jwt-decode";
+import { jwtDecoded, jwt_token } from "../../utils";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -40,14 +40,13 @@ const Reserve = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let jwt_token = localStorage.getItem("token") || null;
         axios.defaults.headers.common["x-auth-token"] = jwt_token;
 
         const response = await axios.get(
           "http://localhost:4000/api/getallreservation"
         );
 
-        const { id } = jwtDecode(jwt_token);
+        const { id } = jwtDecoded();
 
         const newData =
           response.data.length > 0

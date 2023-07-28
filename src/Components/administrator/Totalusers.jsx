@@ -4,36 +4,27 @@ import { Modal } from "react-bootstrap";
 
 import axios from "axios";
 
-import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
 import TextField from "@mui/material/TextField";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import { Container } from "@mui/material";
 import { TablePagination } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Avatar from "@mui/material/Avatar";
 import CssBaseline from "@mui/material/CssBaseline";
-import Typography from "@mui/material/Typography";
 
 import Sidebar from "./sidebar/Sidebar";
+import { jwt_token } from "../utils";
 const theme = createTheme();
-// import Typography from "@mui/material/Typography";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -55,34 +46,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-// const handleSubmit = async (id) => {
-
-// // };
-
 const Totalusers = () => {
   const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState([]);
   const [updateData, setUpdateData] = useState([]);
   const [error, setError] = useState(null);
-  // console.log(data);
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:4000/api/getallusers")
-  //     .then((response) => {
-  //       setData(response.data);
-  //     })
-  //     .catch((error) => {
-  //       setError(error.message);
-  //     });
-  //   let jwt_token = localStorage.getItem("token") || null;
-  //   axios.defaults.headers.common["x-auth-token"] = jwt_token;
-  // }, []);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let jwt_token = localStorage.getItem("token") || null;
         axios.defaults.headers.common["x-auth-token"] = jwt_token;
-        console.log(jwt_token);
 
         const response = await axios.get(
           "http://localhost:4000/api/getallusers"

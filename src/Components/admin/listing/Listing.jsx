@@ -19,7 +19,7 @@ import Adminsidebar from "../sidebar/Adminsidebar";
 import { toast } from "react-hot-toast";
 import { toastSetting } from "../../../utils";
 import { Link } from "react-router-dom";
-import jwtDecode from "jwt-decode";
+import { jwtDecoded, jwt_token } from "../../utils";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -46,14 +46,13 @@ const Listing = () => {
   const [location, setLocation] = useState();
   const loadData = async () => {
     try {
-      let jwt_token = localStorage.getItem("token") || null;
       axios.defaults.headers.common["x-auth-token"] = jwt_token;
 
       const response = await axios.post(
         "http://localhost:4000/api/getallbillboard",
         { location }
       );
-      const { id } = jwtDecode(jwt_token);
+      const { id } = jwtDecoded();
       const newData =
         response.data.length > 0
           ? response.data.filter((reservation) => reservation?.user === id)
@@ -136,7 +135,6 @@ const Listing = () => {
               </TableHead>
               <TableBody>
                 {listing.slice(startIndex, endIndex).map((item, i) => {
-                  console.log({ item });
                   return (
                     <StyledTableRow key={i}>
                       <StyledTableCell component="th" scope="row">

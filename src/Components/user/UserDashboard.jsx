@@ -4,8 +4,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { toastSetting } from "../../utils";
-import jwtDecode from "jwt-decode";
 import { Link } from "react-router-dom";
+import { jwtDecoded, jwt_token } from "../utils";
 
 const UserDashboard = () => {
   const [totalReservations, setTotalReservations] = useState(0);
@@ -14,14 +14,13 @@ const UserDashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let jwt_token = localStorage.getItem("token") || null;
         axios.defaults.headers.common["x-auth-token"] = jwt_token;
 
         const response = await axios.get(
           "http://localhost:4000/api/getallreservation"
         );
 
-        const { id } = jwtDecode(jwt_token);
+        const { id } = jwtDecoded();
 
         const newData =
           response.data.length > 0

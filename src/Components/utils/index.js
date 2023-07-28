@@ -1,9 +1,18 @@
 import jwtDecode from "jwt-decode";
+const jwt_token = localStorage.getItem("token") || null;
+
 const isUser = () => {
-  const token = localStorage.getItem("token");
-  if (!token) return false;
-  const user = jwtDecode(token);
+  if (!jwt_token) return false;
+  const user = jwtDecode(jwt_token);
   return user?.role;
 };
-console.log({ user: isUser() });
-export { isUser };
+
+const isLoggedIn = () => !!jwt_token;
+
+const jwtDecoded = () => {
+  if (!jwt_token) return false;
+  const user = jwtDecode(jwt_token);
+  return user;
+};
+
+export { isUser, isLoggedIn, jwt_token, jwtDecoded };
