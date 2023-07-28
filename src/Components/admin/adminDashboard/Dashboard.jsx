@@ -30,7 +30,7 @@ const DashBoard = () => {
               )
             : [];
 
-        const billBoardResponse = await axios.get(
+        const billBoardResponse = await axios.post(
           "http://localhost:4000/api/getallbillboard"
         );
 
