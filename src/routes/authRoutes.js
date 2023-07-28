@@ -24,7 +24,7 @@ const getAuthRoutes = () => ({
     {
       path: "/administrator",
       element:
-        isUser === "Administrator" ? (
+        isUser() === "Administrator" ? (
           <Administrator />
         ) : (
           <Navigate to="/UserDashboard" />
@@ -33,7 +33,7 @@ const getAuthRoutes = () => ({
     {
       path: "/addadmin",
       element:
-        isUser === "Administrator" ? (
+        isUser() === "Administrator" ? (
           <Addadmin />
         ) : (
           <Navigate to="/UserDashboard" />
@@ -42,7 +42,7 @@ const getAuthRoutes = () => ({
     {
       path: "/totaladmin",
       element:
-        isUser === "Administrator" ? (
+        isUser() === "Administrator" ? (
           <Totaladmin />
         ) : (
           <Navigate to="/UserDashboard" />
@@ -51,7 +51,7 @@ const getAuthRoutes = () => ({
     {
       path: "/totalusers",
       element:
-        isUser === "Administrator" ? (
+        isUser() === "Administrator" ? (
           <Totalusers />
         ) : (
           <Navigate to="/UserDashboard" />
@@ -60,26 +60,29 @@ const getAuthRoutes = () => ({
     {
       path: "/admin",
       element:
-        isUser === "Admin" ? <DashBoard /> : <Navigate to="/UserDashboard" />,
+        isUser() === "Admin" ? <DashBoard /> : <Navigate to="/UserDashboard" />,
     },
     {
       path: "/addproduct",
       element:
-        isUser === "Admin" ? <Addproduct /> : <Navigate to="/UserDashboard" />,
+        isUser() === "Admin" ? (
+          <Addproduct />
+        ) : (
+          <Navigate to="/UserDashboard" />
+        ),
     },
     {
       path: "/listing",
       element:
-        isUser === "Admin" ? <Listing /> : <Navigate to="/UserDashboard" />,
+        isUser() === "Admin" ? <Listing /> : <Navigate to="/UserDashboard" />,
     },
     {
       path: "/reserves",
       element:
-        isUser === "Admin" ? <Reserves /> : <Navigate to="/UserDashboard" />,
+        isUser() === "Admin" ? <Reserves /> : <Navigate to="/UserDashboard" />,
     },
     { path: "UserDashboard", element: <UserDashboard /> },
     { path: "/billBoardListing", element: <BillBoardListing /> },
-
     { path: "reserve", element: <Reserve /> },
     // { path: "billboard", element: <BillBoard /> },
     // { path: "booking", element: <Booking /> }, remove this

@@ -45,7 +45,25 @@ function Adminsidebar() {
                   </a>
                 </li>
               </Link>
-              {/* </Link> */}
+              <Link
+                to="/"
+                style={{
+                  color: "white",
+                }}
+              >
+                <li
+                  style={{
+                    textAlign: "center",
+                    marginTop: "60vh",
+                  }}
+                >
+                  <a>
+                    <span onClick={() => localStorage.removeItem("token")}>
+                      Logout
+                    </span>
+                  </a>
+                </li>
+              </Link>
             </ul>
           </nav>
         </div>

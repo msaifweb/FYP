@@ -14,6 +14,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { toastSetting } from "../../../utils";
+import jwtDecode from "jwt-decode";
 
 function Copyright(props) {
   return (
@@ -53,7 +54,8 @@ export default function Usersignin() {
       .then((res) => {
         toast.success("Login Successfuly!", toastSetting);
         localStorage.setItem("token", res.data);
-        navigate("/UserDashboard");
+        const { role } = jwtDecode(res.data);
+        navigate(role === "Admin" ? "/admin" : "/UserDashboard");
       })
       .catch((err) => toast.error(err.message, toastSetting));
   };

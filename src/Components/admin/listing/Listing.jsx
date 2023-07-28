@@ -18,6 +18,8 @@ import { TablePagination } from "@mui/material";
 import Adminsidebar from "../sidebar/Adminsidebar";
 import { toast } from "react-hot-toast";
 import { toastSetting } from "../../../utils";
+import { Link } from "react-router-dom";
+import jwtDecode from "jwt-decode";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -51,7 +53,15 @@ const Listing = () => {
         const response = await axios.get(
           "http://localhost:4000/api/getallbillboard"
         );
-        setListing(response.data);
+
+        const { id } = jwtDecode(jwt_token);
+        console.log({ first: response.data });
+        const newData =
+          response.data.length > 0
+            ? response.data.filter((reservation) => reservation?.user === id)
+            : [];
+
+        setListing(newData);
       } catch (error) {
         toast.error(error.message, toastSetting);
       }
@@ -104,12 +114,12 @@ const Listing = () => {
                   <StyledTableCell component="th" scope="row">
                     Location
                   </StyledTableCell>
-                  <StyledTableCell align="right"> Size </StyledTableCell>
-                  <StyledTableCell align="right">Rate</StyledTableCell>
-                  <StyledTableCell align="right">Status</StyledTableCell>
-                  <StyledTableCell align="right">Image</StyledTableCell>
+                  <StyledTableCell> Size </StyledTableCell>
+                  <StyledTableCell>Rate</StyledTableCell>
+                  <StyledTableCell>Status</StyledTableCell>
+                  <StyledTableCell>Image</StyledTableCell>
 
-                  <StyledTableCell align="right">Actions</StyledTableCell>
+                  <StyledTableCell>Actions</StyledTableCell>
                 </StyledTableRow>
               </TableHead>
               <TableBody>
@@ -127,35 +137,27 @@ const Listing = () => {
                       <StyledTableCell component="th" scope="row">
                         {item.location}
                       </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {" "}
-                        {item.size}{" "}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {" "}
-                        {item.perDayRate}{" "}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {" "}
-                        {item.status}{" "}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
+                      <StyledTableCell> {item.size} </StyledTableCell>
+                      <StyledTableCell> {item.perDayRate} </StyledTableCell>
+                      <StyledTableCell> {item.status} </StyledTableCell>
+                      <StyledTableCell>
                         <img src={item.image} alt={item.location} width={150} />
                       </StyledTableCell>
 
-                      <StyledTableCell align="right">
-                        {" "}
+                      <StyledTableCell>
+                        {/* {" "}
                         <Button>
                           {" "}
                           Delete
                           <DeleteIcon />
                         </Button>{" "}
-                        &nbsp; &nbsp;
-                        {/******************  Update Dialog Start  **************************/}
-                        <Button>
-                          Edit
-                          <EditIcon />
-                        </Button>
+                        &nbsp; &nbsp; */}
+                        <Link to="/addproduct" state={{ item }}>
+                          <Button variant="primary">
+                            Edit
+                            <EditIcon />
+                          </Button>
+                        </Link>
                       </StyledTableCell>
                     </StyledTableRow>
                   );

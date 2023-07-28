@@ -5,20 +5,27 @@ import Adminsidebar from "../sidebar/Adminsidebar";
 import jwtDecode from "jwt-decode";
 import { toast } from "react-hot-toast";
 import { toastSetting } from "../../../utils";
+import { useLocation } from "react-router-dom";
+
 const Addproduct = () => {
   let jwt_token = localStorage.getItem("token") || null;
   const { id } = jwtDecode(jwt_token);
 
+  const location = useLocation();
+  const item = location?.state?.item;
+  console.log({ item });
+  const options = ["Available", "Booked"];
   const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    location: "",
-    size: "",
-    perDayRate: 0,
-    image: "",
+    _id: item?._id ?? "",
+    name: item?.name ?? "",
+    description: item?.description ?? "",
+    status: item?.status ?? "Available",
+    location: item?.location ?? "",
+    size: item?.size ?? "",
+    perDayRate: item?.perDayRate ?? 0,
+    image: item?.image ?? "",
     userId: id,
   });
-
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "image" && files && files.length > 0) {
@@ -40,11 +47,21 @@ const Addproduct = () => {
   const Adddata = async (userData) => {
     let jwt_token = localStorage.getItem("token") || null;
     axios.defaults.headers.common["x-auth-token"] = jwt_token;
-    try {
-      await axios.post("http://localhost:4000/api/createbillboard", userData);
-      toast.success("Billboard successfully saved", toastSetting);
-    } catch (error) {
-      toast.error(error.message, toastSetting);
+    console.log({ formData });
+    if (item) {
+      try {
+        await axios.put("http://localhost:4000/api/updatebillboard", userData);
+        toast.success("Billboard successfully updated", toastSetting);
+      } catch (error) {
+        toast.error(error.message, toastSetting);
+      }
+    } else {
+      try {
+        await axios.post("http://localhost:4000/api/createbillboard", userData);
+        toast.success("Billboard successfully saved", toastSetting);
+      } catch (error) {
+        toast.error(error.message, toastSetting);
+      }
     }
   };
 
@@ -135,23 +152,55 @@ const Addproduct = () => {
             </div>
 
             <div className="mb-3">
+              <label htmlFor="status" className="form-label">
+                Status:
+              </label>
+
+              <select
+                id="status"
+                className="form-control"
+                name="status"
+                value={formData.status}
+                onChange={handleChange}
+                placeholder="Status"
+                required
+              >
+                {options.map((option, index) => {
+                  return <option key={index}>{option}</option>;
+                })}
+              </select>
+            </div>
+            <div className="mb-3">
               <label htmlFor="image" className="form-label">
                 BillBoard Image:
               </label>
               <input
-                // type="file"
                 id="image"
                 className="form-control"
                 name="image"
                 accept="image/*"
                 onChange={handleChange}
                 type="file"
-                required
+                required={!item}
               />
             </div>
-            <div>
+            {formData.image && (
+              <div className="mb-3">
+                <img
+                  src={formData.image}
+                  width={150}
+                  style={{ border: "1px solid red" }}
+                />
+              </div>
+            )}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+              }}
+            >
               <button type="submit" className="btn btn-primary">
-                Add Billboard
+                {item ? "Update Billboard" : "Add Billboard"}
               </button>
             </div>
           </form>
