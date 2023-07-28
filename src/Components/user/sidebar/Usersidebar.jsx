@@ -35,7 +35,7 @@ function Usersidebar() {
             }}
           >
             <Avatar
-              alt={user?.name.toUpperCase()}
+              alt={user?.name?.toUpperCase()}
               src="/static/images/avatar/1.jpg"
               sx={{ width: 70, height: 70 }}
             />
@@ -61,7 +61,7 @@ function Usersidebar() {
         <div className="sidebar-wrapper">
           <nav id="sidebar">
             <ul className="list-unstyled components">
-              <Link to="/UserDashboard">
+              <Link to="/UserDashboard" className="linkText">
                 <li>
                   <a href="#" className="sidebarHeader">
                     <i className="fas fa-tachometer-alt  " /> Dashboard
@@ -75,7 +75,7 @@ function Usersidebar() {
                 </a>
               </li>
 
-              <Link to="/billBoardListing">
+              <Link to="/billBoardListing" className="linkText">
                 <li>
                   <a href="#" className="sidebarHeader">
                     <i className="fas fa-tachometer-alt  " />
@@ -84,7 +84,7 @@ function Usersidebar() {
                 </li>
               </Link>
 
-              <Link to="/reserve">
+              <Link to="/reserve" className="linkText">
                 <li>
                   <a href="#" className="sidebarHeader">
                     <i className="fas fa-tachometer-alt  " />
@@ -99,6 +99,7 @@ function Usersidebar() {
                   color: "white",
                   // textDecoration: "none",
                 }}
+                className="linkText"
               >
                 <li
                   style={{

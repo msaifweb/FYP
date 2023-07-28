@@ -108,6 +108,10 @@ ul ul a {
   background: #232f3e;
 }
 
+.linkText {
+  text-decoration: none;
+}
+
 ul.CTAs {
   padding: 20px;
 }
