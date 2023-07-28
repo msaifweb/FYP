@@ -27,7 +27,7 @@ const getAuthRoutes = () => ({
         isUser() === "Administrator" ? (
           <Administrator />
         ) : (
-          <Navigate to="/UserDashboard" />
+          <Navigate to="/userDashboard" />
         ),
     },
     {
@@ -36,7 +36,7 @@ const getAuthRoutes = () => ({
         isUser() === "Administrator" ? (
           <Addadmin />
         ) : (
-          <Navigate to="/UserDashboard" />
+          <Navigate to="/userDashboard" />
         ),
     },
     {
@@ -45,7 +45,7 @@ const getAuthRoutes = () => ({
         isUser() === "Administrator" ? (
           <Totaladmin />
         ) : (
-          <Navigate to="/UserDashboard" />
+          <Navigate to="/userDashboard" />
         ),
     },
     {
@@ -54,13 +54,13 @@ const getAuthRoutes = () => ({
         isUser() === "Administrator" ? (
           <Totalusers />
         ) : (
-          <Navigate to="/UserDashboard" />
+          <Navigate to="/userDashboard" />
         ),
     },
     {
       path: "/admin",
       element:
-        isUser() === "Admin" ? <DashBoard /> : <Navigate to="/UserDashboard" />,
+        isUser() === "Admin" ? <DashBoard /> : <Navigate to="/userDashboard" />,
     },
     {
       path: "/addproduct",
@@ -68,13 +68,13 @@ const getAuthRoutes = () => ({
         isUser() === "Admin" ? (
           <Addproduct />
         ) : (
-          <Navigate to="/UserDashboard" />
+          <Navigate to="/userDashboard" />
         ),
     },
     {
       path: "/listing",
       element:
-        isUser() === "Admin" ? <Listing /> : <Navigate to="/UserDashboard" />,
+        isUser() === "Admin" ? <Listing /> : <Navigate to="/userDashboard" />,
     },
     {
       path: "/reserves",

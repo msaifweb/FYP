@@ -38,7 +38,14 @@ const theme = createTheme();
 
 const Addadmin = () => {
   const [showModal, setShowModal] = useState(false);
-
+  const [formData, setFormData] = useState({
+    name: "",
+    password: "",
+    phone: "",
+    email: "",
+    role: "",
+  });
+  console.log({ formData });
   const handleShowModal = () => {
     setShowModal(true);
   };
@@ -46,9 +53,29 @@ const Addadmin = () => {
   const handleCloseModal = () => {
     setShowModal(false);
   };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:4000/createuser", {
+        ...formData,
+        role: "Admin",
+      });
+      console.log("User signed up successfully:", response.data);
+    } catch (error) {
+      console.error("Error signing up user:", error.response.data);
+    }
+    setFormData({
+      name: "",
+      password: "",
+      phone: "",
+      email: "",
+      role: "",
+    });
   };
 
   return (
@@ -66,7 +93,7 @@ const Addadmin = () => {
               src="/static/images/avatar/1.jpg"
               sx={{ width: 70, height: 70 }}
             />
-          </span>{" "}
+          </span>
           <p>
             <b>Awais Ahmad</b>
           </p>
@@ -120,8 +147,8 @@ const Addadmin = () => {
                           label="User Name"
                           type="name"
                           name="name"
-                          //   value={formData.name}
-                          //   onChange={handleChange}
+                          value={formData.name}
+                          onChange={handleChange}
 
                           // autoComplete="email"
                         />
@@ -133,8 +160,8 @@ const Addadmin = () => {
                           id="email"
                           label="Email"
                           name="email"
-                          //   value={formData.email}
-                          //   onChange={handleChange}
+                          value={formData.email}
+                          onChange={handleChange}
 
                           // autoComplete="email"
                         />
@@ -146,8 +173,8 @@ const Addadmin = () => {
                           id="email"
                           label="Phone Number"
                           name="phone"
-                          //   value={formData.phone}
-                          //   onChange={handleChange}
+                          value={formData.phone}
+                          onChange={handleChange}
                         />
                       </Grid>
                       <Grid item xs={12}>
@@ -157,8 +184,8 @@ const Addadmin = () => {
                           name="password"
                           label="Password"
                           type="password"
-                          //   value={formData.password}
-                          //   onChange={handleChange}
+                          value={formData.password}
+                          onChange={handleChange}
                         />
                       </Grid>
                       {/* <Grid item xs={12}>
