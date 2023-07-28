@@ -97,7 +97,7 @@ const Reserve = () => {
                 <StyledTableRow>
                   <StyledTableCell align="center">Image</StyledTableCell>
                   <StyledTableCell component="th" scope="row">
-                    BillBoard location
+                    Billboard Location
                   </StyledTableCell>
                   <StyledTableCell>Size</StyledTableCell>
                   <StyledTableCell component="th" scope="row">

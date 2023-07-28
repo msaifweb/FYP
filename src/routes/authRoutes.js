@@ -84,7 +84,7 @@ const getAuthRoutes = () => ({
     { path: "UserDashboard", element: <UserDashboard /> },
     { path: "/billBoardListing", element: <BillBoardListing /> },
     { path: "reserve", element: <Reserve /> },
-    // { path: "billboard", element: <BillBoard /> },
+    // { path: "billboard", element: <Billboard /> },
     // { path: "booking", element: <Booking /> }, remove this
     // { path: "profile", element: <Profile /> }, remove this
     // { path: "AddProductPage", element: <AddProductPage /> }, remove this

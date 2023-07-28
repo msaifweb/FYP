@@ -172,7 +172,7 @@ const Addproduct = () => {
             </div>
             <div className="mb-3">
               <label htmlFor="image" className="form-label">
-                BillBoard Image:
+                Billboard Image:
               </label>
               <input
                 id="image"

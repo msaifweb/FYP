@@ -1,9 +1,5 @@
-// import "./administrator.css";
 import React, { useState, useEffect } from "react";
-
 import axios from "axios";
-
-import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -12,20 +8,12 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import TextField from "@mui/material/TextField";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import Grid from "@mui/material/Grid";
-import { Container } from "@mui/material";
 import { TablePagination } from "@mui/material";
 import Adminsidebar from "../sidebar/Adminsidebar";
+import { format, parseISO } from "date-fns";
+import { toast } from "react-hot-toast";
+import { toastSetting } from "../../../utils";
+import jwtDecode from "jwt-decode";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -47,55 +35,34 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const Reserves = () => {
-  const [showModal, setShowModal] = useState(false);
-
+const Reserve = () => {
   const [data, setData] = useState([]);
-  const [error, setError] = useState(null);
-  // console.log(data);
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:4000/api/getallusers")
-  //     .then((response) => {
-  //       setData(response.data);
-  //     })
-  //     .catch((error) => {
-  //       setError(error.message);
-  //     });
-  //   let jwt_token = localStorage.getItem("token") || null;
-  //   axios.defaults.headers.common["x-auth-token"] = jwt_token;
-  // }, []);
   useEffect(() => {
     const fetchData = async () => {
       try {
         let jwt_token = localStorage.getItem("token") || null;
         axios.defaults.headers.common["x-auth-token"] = jwt_token;
-        console.log(jwt_token);
 
         const response = await axios.get(
-          "http://localhost:4000/api/getallusers"
+          "http://localhost:4000/api/getallreservation"
         );
 
-        setData(response.data);
+        const { id } = jwtDecode(jwt_token);
+
+        const newData =
+          response.data.length > 0
+            ? response.data.filter(
+                (reservation) => reservation?.billBoard.user === id
+              )
+            : [];
+        setData(newData);
       } catch (error) {
-        setError(error.message);
+        toast.error(error.message, toastSetting);
       }
     };
 
     fetchData();
   }, []);
-
-  const handleShowModal = () => {
-    setShowModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
-
-  {
-    /******************  Pagination States   **************************/
-  }
 
   // const [tableData, setTableData] = useState([2]);
   const [page, setPage] = useState(0);
@@ -113,9 +80,6 @@ const Reserves = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  {
-    /******************  Pagination States  **************************/
-  }
 
   return (
     <>
@@ -125,38 +89,65 @@ const Reserves = () => {
         </div>
 
         <div className="col-12 col-md-9 mx-2">
-          <h1 className="my-4 dasHeader">Dashboard</h1>
-
+          <h1 className="my-4 dasHeader">Reservation</h1>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              paddingBottom: "5px",
+            }}
+          >
+            <b> Total Revenue:</b> &nbsp;
+            {data.reduce(
+              (prevValue, currentValue) => prevValue + currentValue.rate,
+              0
+            )}
+          </div>
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
+              <TableHead>
+                <StyledTableRow>
+                  <StyledTableCell>Client</StyledTableCell>
+                  <StyledTableCell>Client Phone</StyledTableCell>
+                  <StyledTableCell component="th" scope="row">
+                    Billboard Location
+                  </StyledTableCell>
+                  <StyledTableCell align="center">Image</StyledTableCell>
+                  <StyledTableCell component="th" scope="row">
+                    Date From
+                  </StyledTableCell>
+
+                  <StyledTableCell component="th" scope="row">
+                    Date To
+                  </StyledTableCell>
+                  <StyledTableCell> Revenue</StyledTableCell>
+                </StyledTableRow>
+              </TableHead>
               <TableBody>
                 {data.slice(startIndex, endIndex).map((item, i) => {
                   return (
                     <StyledTableRow key={i}>
-                      <StyledTableCell align="left">
-                        {" "}
-                        {item.id}{" "}
-                      </StyledTableCell>
+                      <StyledTableCell> {item.user.name} </StyledTableCell>
+                      <StyledTableCell> {item.user.phone} </StyledTableCell>
 
                       <StyledTableCell component="th" scope="row">
-                        {item.name}
+                        {item.billBoard.location}
                       </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {" "}
-                        {item.email}{" "}
+                      <StyledTableCell align="center">
+                        <img
+                          src={item.billBoard.image}
+                          alt={item.billBoard.location}
+                          width={150}
+                        />
                       </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {" "}
-                        {item.phone}{" "}
+                      <StyledTableCell>
+                        {format(parseISO(item.startDate), "dd MMM yyyy")}
                       </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {" "}
-                        {item.status}{" "}
+                      <StyledTableCell>
+                        {format(parseISO(item.endDate), "dd MMM yyyy")}
                       </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {" "}
-                        {item.role}{" "}
-                      </StyledTableCell>
+
+                      <StyledTableCell> {item.rate} </StyledTableCell>
                     </StyledTableRow>
                   );
                 })}
@@ -173,11 +164,10 @@ const Reserves = () => {
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
           </TableContainer>
-          {/******************  Pagination End  **************************/}
         </div>
       </div>
     </>
   );
 };
 
-export default Reserves;
+export default Reserve;

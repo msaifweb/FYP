@@ -36,7 +36,7 @@ const Booking = () => {
                     Ending Date
                   </th>
                   <th className="small fw-normal text-secondary">
-                    BillBoard Type
+                    Billboard Type
                   </th>
                   <th className="small fw-normal text-secondary">With</th>
                   <th className="small fw-normal text-secondary text-center">

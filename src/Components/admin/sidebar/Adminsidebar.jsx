@@ -1,9 +1,63 @@
 import "./adminsidebar.css";
+
+import React, { useState } from "react";
+
 import { Link } from "react-router-dom";
+import { Modal, Button } from "react-bootstrap";
+import Avatar from "@mui/material/Avatar";
+import jwtDecode from "jwt-decode";
 
 function Adminsidebar() {
+  let jwt_token = localStorage.getItem("token") || null;
+  const user = jwtDecode(jwt_token);
+
+  const [showModal, setShowModal] = useState(false);
+
+  const handleShowModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
   return (
     <>
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title> Profile</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <span
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              textAlign: "center",
+            }}
+          >
+            <Avatar
+              alt={user.name.toUpperCase()}
+              src="/static/images/avatar/1.jpg"
+              sx={{ width: 70, height: 70 }}
+            />
+          </span>{" "}
+          <br />
+          <p>
+            <b>Name: </b>
+            {user.name}
+          </p>
+          <p>
+            <b>Email: </b>
+            {user.email}
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       <div className="row">
         <div className="sidebar-wrapper">
           <nav id="sidebar">
@@ -15,17 +69,16 @@ function Adminsidebar() {
                   </a>
                 </li>
               </Link>
-              <li>
+              <li onClick={handleShowModal}>
                 <a href="#" className="sidebarHeader">
                   <i className="fas fa-tachometer-alt  " /> Profile
                 </a>
               </li>
-              {/* <Link to="/listing"> */}
               <Link to="/addproduct">
                 <li>
                   <a href="#" className="sidebarHeader">
                     <i className="fas fa-tachometer-alt  " />
-                    Add Product
+                    Add Billboard
                   </a>
                 </li>
               </Link>
@@ -33,7 +86,7 @@ function Adminsidebar() {
                 <li>
                   <a href="#" className="sidebarHeader">
                     <i className="fas fa-tachometer-alt  " />
-                    Listing
+                    Billboard Listing
                   </a>
                 </li>
               </Link>
