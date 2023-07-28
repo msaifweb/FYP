@@ -12,6 +12,8 @@ import Reserves from "../Components/admin/reserves/Reserves";
 import Totaladmin from "../Components/administrator/totaladmin/Totaladmin";
 import { isUser } from "../Components/utils";
 import Reserve from "../Components/user/Reserve/Reserve";
+import AdministratorReserve from "../Components/administrator/reserves/AdministratorReserve";
+import AdministratorListing from "../Components/administrator/administratorListing/AdministratorListing";
 const isLoggedIn = () => localStorage.getItem("token") || null;
 
 const getAuthRoutes = () => ({
@@ -50,6 +52,24 @@ const getAuthRoutes = () => ({
       element:
         isUser() === "Administrator" ? (
           <Totalusers />
+        ) : (
+          <Navigate to="/userDashboard" />
+        ),
+    },
+    {
+      path: "/administratorReserve",
+      element:
+        isUser() === "Administrator" ? (
+          <AdministratorReserve />
+        ) : (
+          <Navigate to="/userDashboard" />
+        ),
+    },
+    {
+      path: "/administratorListing",
+      element:
+        isUser() === "Administrator" ? (
+          <AdministratorListing />
         ) : (
           <Navigate to="/userDashboard" />
         ),

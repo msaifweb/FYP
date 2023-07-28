@@ -151,7 +151,12 @@ const Listing = () => {
                       <StyledTableCell> {item.perDayRate} </StyledTableCell>
                       <StyledTableCell> {item.status} </StyledTableCell>
                       <StyledTableCell>
-                        <img src={item.image} alt={item.location} width={150} />
+                        <img
+                          src={item.image}
+                          alt={item.location}
+                          width={150}
+                          height={150}
+                        />
                       </StyledTableCell>
 
                       <StyledTableCell>

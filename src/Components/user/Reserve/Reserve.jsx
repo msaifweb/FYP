@@ -118,6 +118,7 @@ const Reserve = () => {
                           src={item.billBoard.image}
                           alt={item.billBoard.location}
                           width={150}
+                          height={150}
                         />
                       </StyledTableCell>
 

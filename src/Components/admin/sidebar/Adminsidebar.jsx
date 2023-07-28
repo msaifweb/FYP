@@ -61,7 +61,7 @@ function Adminsidebar() {
         <div className="sidebar-wrapper">
           <nav id="sidebar">
             <ul className="list-unstyled components">
-              <Link to="/admin">
+              <Link className="linkText" to="/admin">
                 <li>
                   <a href="#" className="sidebarHeader">
                     <i className="fas fa-tachometer-alt  " /> Dashboard
@@ -73,7 +73,7 @@ function Adminsidebar() {
                   <i className="fas fa-tachometer-alt  " /> Profile
                 </a>
               </li>
-              <Link to="/addproduct">
+              <Link className="linkText" to="/addproduct">
                 <li>
                   <a href="#" className="sidebarHeader">
                     <i className="fas fa-tachometer-alt  " />
@@ -81,7 +81,7 @@ function Adminsidebar() {
                   </a>
                 </li>
               </Link>
-              <Link to="/listing">
+              <Link className="linkText" to="/listing">
                 <li>
                   <a href="#" className="sidebarHeader">
                     <i className="fas fa-tachometer-alt  " />
@@ -89,7 +89,7 @@ function Adminsidebar() {
                   </a>
                 </li>
               </Link>
-              <Link to="/reserves">
+              <Link className="linkText" to="/reserves">
                 <li>
                   <a href="#" className="sidebarHeader">
                     <i className="fas fa-tachometer-alt  " />
@@ -98,6 +98,7 @@ function Adminsidebar() {
                 </li>
               </Link>
               <Link
+                className="linkText"
                 to="/"
                 style={{
                   color: "white",

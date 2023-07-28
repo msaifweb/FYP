@@ -14,7 +14,7 @@ import Button from "@mui/material/Button";
 import EditIcon from "@mui/icons-material/Edit";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import { Container } from "@mui/material";
+import { Container, TableHead } from "@mui/material";
 import { TablePagination } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -128,31 +128,39 @@ const Totalusers = () => {
         </div>
 
         <div className="col-12 col-md-9 mx-2">
-          <h1 className="my-4 dasHeader">Dashboard</h1>
+          <h1 className="my-4 dasHeader">Users</h1>
 
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
+              <TableHead>
+                <StyledTableRow>
+                  <StyledTableCell component="th" scope="row">
+                    Name
+                  </StyledTableCell>
+                  <StyledTableCell>Email</StyledTableCell>
+                  <StyledTableCell component="th" scope="row">
+                    Phone
+                  </StyledTableCell>
+
+                  <StyledTableCell component="th" scope="row">
+                    Statue
+                  </StyledTableCell>
+                  <StyledTableCell>Role</StyledTableCell>
+                  <StyledTableCell>Action</StyledTableCell>
+                </StyledTableRow>
+              </TableHead>
               <TableBody>
                 {data.slice(startIndex, endIndex).map((item, i) => {
                   return (
                     <StyledTableRow key={i}>
-                      <StyledTableCell align="left">{item.id}</StyledTableCell>
                       <StyledTableCell component="th" scope="row">
                         {item.name}
                       </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {item.email}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {item.phone}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {item.status}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {item.role}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
+                      <StyledTableCell>{item.email}</StyledTableCell>
+                      <StyledTableCell>{item.phone}</StyledTableCell>
+                      <StyledTableCell>{item.status}</StyledTableCell>
+                      <StyledTableCell>{item.role}</StyledTableCell>
+                      <StyledTableCell>
                         <Button
                           onClick={() => {
                             handleShowModal(item);

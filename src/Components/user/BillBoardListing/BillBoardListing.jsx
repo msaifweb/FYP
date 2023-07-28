@@ -166,7 +166,12 @@ const BillBoardListing = () => {
                         {item.status}{" "}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        <img src={item.image} alt={item.location} width={150} />
+                        <img
+                          src={item.image}
+                          alt={item.location}
+                          width={150}
+                          height={150}
+                        />
                       </StyledTableCell>
 
                       <StyledTableCell align="right">

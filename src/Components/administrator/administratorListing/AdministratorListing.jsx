@@ -1,5 +1,8 @@
+import "./administratorListing.css";
 import React, { useState, useEffect } from "react";
+
 import axios from "axios";
+
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -8,11 +11,14 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { TablePagination } from "@mui/material";
-import Adminsidebar from "../sidebar/Adminsidebar";
-import { format, parseISO } from "date-fns";
+import Adminsidebar from "../sidebar/Sidebar";
 import { toast } from "react-hot-toast";
 import { toastSetting } from "../../../utils";
+import { Link } from "react-router-dom";
 import { jwtDecoded, jwt_token } from "../../utils";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -35,33 +41,26 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const Reserve = () => {
-  const [data, setData] = useState([]);
+const AdministratorListing = () => {
+  const [listing, setListing] = useState([]);
+  const [location, setLocation] = useState();
+  const loadData = async () => {
+    try {
+      axios.defaults.headers.common["x-auth-token"] = jwt_token;
+
+      const response = await axios.post(
+        "http://localhost:4000/api/getallbillboard",
+        { location }
+      );
+      console.log({ first: response.data });
+      setListing(response.data);
+    } catch (error) {
+      toast.error(error.message, toastSetting);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        axios.defaults.headers.common["x-auth-token"] = jwt_token;
-
-        const response = await axios.get(
-          "http://localhost:4000/api/getallreservation"
-        );
-
-        const { id } = jwtDecoded();
-
-        const newData =
-          response.data.length > 0
-            ? response.data.filter(
-                (reservation) => reservation?.billBoard.user === id
-              )
-            : [];
-        setData(newData);
-      } catch (error) {
-        toast.error(error.message, toastSetting);
-      }
-    };
-
-    fetchData();
-  }, []);
+    loadData();
+  }, [location]);
 
   // const [tableData, setTableData] = useState([2]);
   const [page, setPage] = useState(0);
@@ -79,6 +78,9 @@ const Reserve = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+  {
+    /******************  Pagination States  **************************/
+  }
 
   return (
     <>
@@ -88,66 +90,75 @@ const Reserve = () => {
         </div>
 
         <div className="col-12 col-md-9 mx-2">
-          <h1 className="my-4 dasHeader">Reservation</h1>
-          <div
+          <h1 className="my-4 dasHeader">Billboards</h1>
+          <input
+            type="text"
+            placeholder="Search location"
             style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              paddingBottom: "5px",
+              height: "45px",
+              backgroundColor: "white",
+              border: "2px solid black",
+              padding: "10px 5px",
+              marginBottom: "10px",
+              borderRadius: "5px",
+              width: "100%",
             }}
-          >
-            <b> Total Revenue:</b> &nbsp;
-            {data.reduce(
-              (prevValue, currentValue) => prevValue + currentValue.rate,
-              0
-            )}
-          </div>
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+          />
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
               <TableHead>
                 <StyledTableRow>
-                  <StyledTableCell>Client</StyledTableCell>
-                  <StyledTableCell>Client Phone</StyledTableCell>
                   <StyledTableCell component="th" scope="row">
-                    Billboard Location
-                  </StyledTableCell>
-                  <StyledTableCell align="center">Image</StyledTableCell>
-                  <StyledTableCell component="th" scope="row">
-                    Date From
+                    Admin
                   </StyledTableCell>
 
                   <StyledTableCell component="th" scope="row">
-                    Date To
+                    Name
                   </StyledTableCell>
-                  <StyledTableCell> Revenue</StyledTableCell>
+                  <StyledTableCell component="th" scope="row">
+                    Description
+                  </StyledTableCell>
+
+                  <StyledTableCell component="th" scope="row">
+                    Location
+                  </StyledTableCell>
+                  <StyledTableCell> Size </StyledTableCell>
+                  <StyledTableCell>Rate</StyledTableCell>
+                  <StyledTableCell>Status</StyledTableCell>
+                  <StyledTableCell>Image</StyledTableCell>
                 </StyledTableRow>
               </TableHead>
               <TableBody>
-                {data.slice(startIndex, endIndex).map((item, i) => {
+                {listing.slice(startIndex, endIndex).map((item, i) => {
                   return (
                     <StyledTableRow key={i}>
-                      <StyledTableCell> {item.user.name} </StyledTableCell>
-                      <StyledTableCell> {item.user.phone} </StyledTableCell>
+                      <StyledTableCell component="th" scope="row">
+                        {item.user.name}
+                      </StyledTableCell>
 
                       <StyledTableCell component="th" scope="row">
-                        {item.billBoard.location}
+                        {item.name}
                       </StyledTableCell>
-                      <StyledTableCell align="center">
+                      <StyledTableCell component="th" scope="row">
+                        {item.description}
+                      </StyledTableCell>
+
+                      <StyledTableCell component="th" scope="row">
+                        {item.location}
+                      </StyledTableCell>
+                      <StyledTableCell> {item.size} </StyledTableCell>
+                      <StyledTableCell> {item.perDayRate} </StyledTableCell>
+                      <StyledTableCell> {item.status} </StyledTableCell>
+                      <StyledTableCell>
                         <img
-                          src={item.billBoard.image}
-                          alt={item.billBoard.location}
+                          src={item.image}
+                          alt={item.location}
                           width={150}
                           height={150}
                         />
                       </StyledTableCell>
-                      <StyledTableCell>
-                        {format(parseISO(item.startDate), "dd MMM yyyy")}
-                      </StyledTableCell>
-                      <StyledTableCell>
-                        {format(parseISO(item.endDate), "dd MMM yyyy")}
-                      </StyledTableCell>
-
-                      <StyledTableCell> {item.rate} </StyledTableCell>
                     </StyledTableRow>
                   );
                 })}
@@ -157,17 +168,18 @@ const Reserve = () => {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={data.length}
+              count={listing.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
           </TableContainer>
+          {/******************  Pagination End  **************************/}
         </div>
       </div>
     </>
   );
 };
 
-export default Reserve;
+export default AdministratorListing;

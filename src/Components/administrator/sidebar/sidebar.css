@@ -28,6 +28,7 @@
 
 .sidebarHeader {
   text-align: center;
+  text-decoration: none;
 }
 
 .dasHeader {
@@ -54,6 +55,10 @@
   background: #4c4f54;
   color: #fff;
   transition: all 0.3s;
+  text-decoration: none;
+}
+.linkText {
+  text-decoration: none;
 }
 #sidebar.active {
   margin-left: -250px;

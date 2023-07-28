@@ -185,6 +185,7 @@ const Addproduct = () => {
                 <img
                   src={formData.image}
                   width={150}
+                  height={150}
                   style={{ border: "1px solid red" }}
                 />
               </div>

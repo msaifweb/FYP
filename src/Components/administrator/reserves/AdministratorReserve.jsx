@@ -9,7 +9,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { TablePagination } from "@mui/material";
-import Adminsidebar from "../sidebar/Adminsidebar";
+import Adminsidebar from "../sidebar/Sidebar";
 import { format, parseISO } from "date-fns";
 import { toast } from "react-hot-toast";
 import { toastSetting } from "../../../utils";
@@ -35,7 +35,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const Reserve = () => {
+const AdministratorReserve = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -46,15 +46,8 @@ const Reserve = () => {
           "http://localhost:4000/api/getallreservation"
         );
 
-        const { id } = jwtDecoded();
-
-        const newData =
-          response.data.length > 0
-            ? response.data.filter(
-                (reservation) => reservation?.billBoard.user === id
-              )
-            : [];
-        setData(newData);
+        console.log({ first: response.data });
+        setData(response.data);
       } catch (error) {
         toast.error(error.message, toastSetting);
       }
@@ -97,17 +90,20 @@ const Reserve = () => {
             }}
           >
             <b> Total Revenue:</b> &nbsp;
-            {data.reduce(
-              (prevValue, currentValue) => prevValue + currentValue.rate,
-              0
-            )}
+            {data
+              .reduce(
+                (prevValue, currentValue) =>
+                  prevValue + (currentValue.rate / 100) * 2,
+                0
+              )
+              .toFixed(2)}
           </div>
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
               <TableHead>
                 <StyledTableRow>
+                  <StyledTableCell>Admin</StyledTableCell>
                   <StyledTableCell>Client</StyledTableCell>
-                  <StyledTableCell>Client Phone</StyledTableCell>
                   <StyledTableCell component="th" scope="row">
                     Billboard Location
                   </StyledTableCell>
@@ -120,14 +116,18 @@ const Reserve = () => {
                     Date To
                   </StyledTableCell>
                   <StyledTableCell> Revenue</StyledTableCell>
+                  <StyledTableCell> Commotion 2%</StyledTableCell>
                 </StyledTableRow>
               </TableHead>
               <TableBody>
                 {data.slice(startIndex, endIndex).map((item, i) => {
                   return (
                     <StyledTableRow key={i}>
+                      <StyledTableCell>
+                        {" "}
+                        {item.billBoard.user.name}{" "}
+                      </StyledTableCell>
                       <StyledTableCell> {item.user.name} </StyledTableCell>
-                      <StyledTableCell> {item.user.phone} </StyledTableCell>
 
                       <StyledTableCell component="th" scope="row">
                         {item.billBoard.location}
@@ -148,6 +148,10 @@ const Reserve = () => {
                       </StyledTableCell>
 
                       <StyledTableCell> {item.rate} </StyledTableCell>
+                      <StyledTableCell>
+                        {" "}
+                        {(item.rate / 100) * 2}{" "}
+                      </StyledTableCell>
                     </StyledTableRow>
                   );
                 })}
@@ -170,4 +174,4 @@ const Reserve = () => {
   );
 };
 
-export default Reserve;
+export default AdministratorReserve;
