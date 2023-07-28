@@ -10,10 +10,10 @@ import BillBoardListing from "../Components/user/BillBoardListing/BillBoardListi
 import Addadmin from "../Components/administrator/addadmin/Addadmin";
 import Reserves from "../Components/admin/reserves/Reserves";
 import Totaladmin from "../Components/administrator/totaladmin/Totaladmin";
-import { isUser } from "../Components/utils";
 import Reserve from "../Components/user/Reserve/Reserve";
 import AdministratorReserve from "../Components/administrator/reserves/AdministratorReserve";
 import AdministratorListing from "../Components/administrator/administratorListing/AdministratorListing";
+
 const isLoggedIn = () => localStorage.getItem("token") || null;
 
 const getAuthRoutes = () => ({
@@ -22,81 +22,43 @@ const getAuthRoutes = () => ({
   children: [
     {
       path: "/administrator",
-      element:
-        isUser() === "Administrator" ? (
-          <Administrator />
-        ) : (
-          <Navigate to="/userDashboard" />
-        ),
+      element: <Administrator />,
     },
     {
       path: "/addadmin",
-      element:
-        isUser() === "Administrator" ? (
-          <Addadmin />
-        ) : (
-          <Navigate to="/userDashboard" />
-        ),
+      element: <Addadmin />,
     },
     {
       path: "/totaladmin",
-      element:
-        isUser() === "Administrator" ? (
-          <Totaladmin />
-        ) : (
-          <Navigate to="/userDashboard" />
-        ),
+      element: <Totaladmin />,
     },
     {
       path: "/totalusers",
-      element:
-        isUser() === "Administrator" ? (
-          <Totalusers />
-        ) : (
-          <Navigate to="/userDashboard" />
-        ),
+      element: <Totalusers />,
     },
     {
       path: "/administratorReserve",
-      element:
-        isUser() === "Administrator" ? (
-          <AdministratorReserve />
-        ) : (
-          <Navigate to="/userDashboard" />
-        ),
+      element: <AdministratorReserve />,
     },
     {
       path: "/administratorListing",
-      element:
-        isUser() === "Administrator" ? (
-          <AdministratorListing />
-        ) : (
-          <Navigate to="/userDashboard" />
-        ),
+      element: <AdministratorListing />,
     },
     {
       path: "/admin",
-      element:
-        isUser() === "Admin" ? <DashBoard /> : <Navigate to="/userDashboard" />,
+      element: <DashBoard />,
     },
     {
       path: "/addproduct",
-      element:
-        isUser() === "Admin" ? (
-          <Addproduct />
-        ) : (
-          <Navigate to="/userDashboard" />
-        ),
+      element: <Addproduct />,
     },
     {
       path: "/listing",
-      element:
-        isUser() === "Admin" ? <Listing /> : <Navigate to="/userDashboard" />,
+      element: <Listing />,
     },
     {
       path: "/reserves",
-      element:
-        isUser() === "Admin" ? <Reserves /> : <Navigate to="/UserDashboard" />,
+      element: <Reserves />,
     },
     { path: "UserDashboard", element: <UserDashboard /> },
     { path: "/billBoardListing", element: <BillBoardListing /> },

@@ -33,7 +33,7 @@ function Sidebar() {
             }}
           >
             <Avatar
-              alt={user?.name.toUpperCase()}
+              alt={user?.name?.toUpperCase()}
               src="/static/images/avatar/1.jpg"
               sx={{ width: 70, height: 70 }}
             />

@@ -61,7 +61,7 @@ function Usersidebar() {
         <div className="sidebar-wrapper">
           <nav id="sidebar">
             <ul className="list-unstyled components">
-              <Link to="/UserDashboard" className="linkText">
+              <Link to="/userDashboard" className="linkText">
                 <li>
                   <a href="#" className="sidebarHeader">
                     <i className="fas fa-tachometer-alt  " /> Dashboard
