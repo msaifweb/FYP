@@ -5,7 +5,12 @@ import "./usersidebar.css";
 import { Link } from "react-router-dom";
 import { Modal, Button } from "react-bootstrap";
 import Avatar from "@mui/material/Avatar";
+import jwtDecode from "jwt-decode";
+
 function Usersidebar() {
+  let jwt_token = localStorage.getItem("token") || null;
+  const user = jwtDecode(jwt_token);
+
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => {
@@ -20,30 +25,36 @@ function Usersidebar() {
     <>
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
-          <Modal.Title> Administrator Profile</Modal.Title>
+          <Modal.Title> Profile</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {/* Content of the modal */}
-          {/* Add your form fields or any other content here */}
-          <span style={{ textAlign: "center" }}>
+          <span
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              textAlign: "center",
+            }}
+          >
             <Avatar
-              alt="Remy Sharp"
+              alt={user.name.toUpperCase()}
               src="/static/images/avatar/1.jpg"
               sx={{ width: 70, height: 70 }}
             />
           </span>{" "}
+          <br />
           <p>
-            <b>Awais Ahmad</b>
+            <b>Name: </b>
+            {user.name}
           </p>
           <p>
-            <b>awaisahamd@gmail.com</b>
+            <b>Email: </b>
+            {user.email}
           </p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseModal}>
             Close
           </Button>
-          {/* <Button variant="primary">Add Billboard</Button> */}
         </Modal.Footer>
       </Modal>
 

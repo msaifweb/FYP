@@ -1,4 +1,3 @@
-// import "./administrator.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { styled } from "@mui/material/styles";
