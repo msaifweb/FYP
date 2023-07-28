@@ -1,9 +1,7 @@
 import "./administrator.css";
 import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
-
 import axios from "axios";
-
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -14,7 +12,6 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import { Container } from "@mui/material";
@@ -23,7 +20,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
 import Sidebar from "./sidebar/Sidebar";
-import { jwt_token } from "../utils";
 const theme = createTheme();
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -40,7 +36,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
+
   "&:last-child td, &:last-child th": {
     border: 0,
   },
@@ -50,46 +46,45 @@ const Totalusers = () => {
   const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState([]);
   const [updateData, setUpdateData] = useState([]);
-  const [error, setError] = useState(null);
+
+  const fetchData = async () => {
+    try {
+      let jwt_token = localStorage.getItem("token") || null;
+      axios.defaults.headers.common["x-auth-token"] = jwt_token;
+      console.log(jwt_token);
+
+      const response = await axios.get("http://localhost:4000/api/getallusers");
+      setData(response.data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .put("http://localhost:4000/api/updateuser", updateData)
+      .then(() => {
+        fetchData();
+      })
+      .catch((error) => {
+        console.error("Error updating user:", error.response.data);
+      });
+    handleCloseModal();
+  };
+  const handleCloseModal = () => {
+    setShowModal(false);
+    fetchData();
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        axios.defaults.headers.common["x-auth-token"] = jwt_token;
-
-        const response = await axios.get(
-          "http://localhost:4000/api/getallusers"
-        );
-        setData(response.data);
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-
     fetchData();
   }, []);
 
   const handleShowModal = (item) => {
     setUpdateData(item);
+    console.log(item._id);
 
     setShowModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    axios
-      .put(`http://localhost:4000/api/updateuser`)
-      .then(() => {
-        // setEditingUser(null);
-        // getUsers();
-      })
-      .catch((error) => {
-        console.error("Error updating user:", error.response.data);
-      });
   };
 
   const handleChange = (e) => {
@@ -104,7 +99,6 @@ const Totalusers = () => {
     /******************  Pagination States   **************************/
   }
 
-  // const [tableData, setTableData] = useState([2]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -123,6 +117,8 @@ const Totalusers = () => {
   {
     /******************  Pagination States  **************************/
   }
+  const status = ["Approved", "DisApproved"];
+  const role = ["Admin", "User", "Administrator"];
 
   return (
     <>
@@ -157,22 +153,15 @@ const Totalusers = () => {
                         {item.role}
                       </StyledTableCell>
                       <StyledTableCell align="right">
-                        <Button>
-                          Delete
-                          <DeleteIcon />
-                        </Button>
-                        &nbsp; &nbsp;
-                        {/******************  Update Dialog Start  **************************/}
                         <Button
-                          onClick={() => handleShowModal(item.id)}
-                          // onClick={handleShowModal}
+                          onClick={() => {
+                            handleShowModal(item);
+                          }}
                         >
                           Edit
                           <EditIcon />
                         </Button>
                       </StyledTableCell>
-
-                      {/* <button onClick={handleShowModal}>Details</button> */}
 
                       <Modal show={showModal} onHide={handleCloseModal}>
                         <Modal.Header closeButton>
@@ -192,11 +181,6 @@ const Totalusers = () => {
                                   alignItems: "center",
                                 }}
                               >
-                                {/* <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                  Sign In
-                </Typography> */}
                                 <Box
                                   component="form"
                                   noValidate
@@ -213,30 +197,69 @@ const Totalusers = () => {
                                         name="name"
                                         value={updateData.name}
                                         onChange={handleChange}
-
-                                        // autoComplete="email"
                                       />
                                     </Grid>
 
+                                    <Grid item xs={12}>
+                                      <TextField
+                                        disabled
+                                        required
+                                        fullWidth
+                                        name="email"
+                                        label="Email"
+                                        value={updateData.email}
+                                        onChange={handleChange}
+                                      />
+                                    </Grid>
                                     <Grid item xs={12}>
                                       <TextField
                                         required
                                         fullWidth
                                         name="phone"
                                         label="Phone"
-                                        // type=""
                                         value={updateData.phone}
                                         onChange={handleChange}
                                       />
                                     </Grid>
-                                    {/* <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid> */}
+                                    <Grid item xs={12}>
+                                      <select
+                                        id="status"
+                                        className="form-control"
+                                        name="status"
+                                        value={updateData.status}
+                                        onChange={handleChange}
+                                        placeholder="Status"
+                                        required
+                                      >
+                                        {status.map((option, index) => {
+                                          return (
+                                            <option key={index}>
+                                              {option}
+                                            </option>
+                                          );
+                                        })}
+                                      </select>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                      <select
+                                        disabled
+                                        id="role"
+                                        className="form-control"
+                                        name="role"
+                                        value={updateData.role}
+                                        onChange={handleChange}
+                                        placeholder="Role"
+                                        required
+                                      >
+                                        {role.map((option, index) => {
+                                          return (
+                                            <option key={index}>
+                                              {option}
+                                            </option>
+                                          );
+                                        })}
+                                      </select>
+                                    </Grid>
                                   </Grid>
                                   <Button
                                     type="submit"
