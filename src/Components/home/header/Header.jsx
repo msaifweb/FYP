@@ -5,18 +5,25 @@ import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { Link } from "react-router-dom";
 const Header = ({ type, destination, setDestination }) => {
+  const token = localStorage.getItem("token");
   return (
     <>
       <div className="navbar ">
         <span className="logo">Ultra Sign Solutions</span>
-        <ul className="navItems">
-          <Link to="/usersignin">
-            <button className="navButton btn btn-primary m-2 ">Sign In</button>
-          </Link>
-          <Link to="/usersignup">
-            <button className="navButton btn btn-primary m-2">Register</button>
-          </Link>
-        </ul>
+        {!token && (
+          <ul className="navItems">
+            <Link to="/usersignin">
+              <button className="navButton btn btn-primary m-2 ">
+                Sign In
+              </button>
+            </Link>
+            <Link to="/usersignup">
+              <button className="navButton btn btn-primary m-2">
+                Register
+              </button>
+            </Link>
+          </ul>
+        )}
       </div>
 
       <div className="header mb-5">

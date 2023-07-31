@@ -104,6 +104,7 @@ const Reserve = () => {
                   <StyledTableCell component="th" scope="row">
                     Date To
                   </StyledTableCell>
+                  <StyledTableCell> Tracking Id</StyledTableCell>
                   <StyledTableCell> Total Bill</StyledTableCell>
                 </StyledTableRow>
               </TableHead>
@@ -131,6 +132,7 @@ const Reserve = () => {
                         {format(parseISO(item.endDate), "dd MMM yyyy")}
                       </StyledTableCell>
 
+                      <StyledTableCell> {item.trackingId} </StyledTableCell>
                       <StyledTableCell> {item.rate} </StyledTableCell>
                     </StyledTableRow>
                   );

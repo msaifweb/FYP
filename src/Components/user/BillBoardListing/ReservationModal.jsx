@@ -12,6 +12,7 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { toastSetting } from "../../../utils";
 import jwtDecode from "jwt-decode";
+import jc from "../../images/jazz-cash.png";
 
 const ReservationModal = ({
   showModal,
@@ -30,6 +31,7 @@ const ReservationModal = ({
   ]);
 
   const [dateCount, setDateCount] = useState(0);
+  const [trackingId, setTrackingId] = useState("");
 
   const countDates = () => {
     const start = parseISO(date[0].startDate.toISOString());
@@ -69,17 +71,22 @@ const ReservationModal = ({
       rate: billBoard.perDayRate,
       userId: id,
       billboardId: billBoard._id,
+      trackingId,
     };
-    try {
-      await axios.post(
-        "http://localhost:4000/api/reservation",
-        reservationData
-      );
-      toast.success("Reserved successfully", toastSetting);
-      handleCloseModal();
-      handleReload();
-    } catch (error) {
-      toast.error(error.message, toastSetting);
+    if (trackingId) {
+      try {
+        await axios.post(
+          "http://localhost:4000/api/reservation",
+          reservationData
+        );
+        toast.success("Reserved successfully", toastSetting);
+        handleCloseModal();
+        handleReload();
+      } catch (error) {
+        toast.error(error.message, toastSetting);
+      }
+    } else {
+      toast.error("Tracking Id is requried", toastSetting);
     }
   };
   return (
@@ -126,6 +133,20 @@ const ReservationModal = ({
           {dateCount && (
             <div>Total bill: {dateCount * billBoard?.perDayRate} PKR</div>
           )}
+        </div>
+        <div>
+          <img src={jc} width="60px" />: 03334943495
+        </div>
+        <div style={{ paddingTop: "5px" }}>
+          Tracking Id:{" "}
+          <input
+            type="text"
+            placeholder="Tracking Id"
+            className="headertrackingId"
+            value={trackingId}
+            required
+            onChange={(e) => setTrackingId(e.target.value)}
+          />
         </div>
       </Modal.Body>
       <Modal.Footer>

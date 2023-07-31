@@ -172,11 +172,18 @@ const BillBoardListing = () => {
                           alt={item.location}
                           width={150}
                           height={100}
+                          style={{
+                            filter:
+                              item.status !== "Available" ? "blur(3px)" : "",
+                          }}
                         />
                       </StyledTableCell>
 
                       <StyledTableCell align="right">
-                        <Button onClick={() => handleShowModal(item)}>
+                        <Button
+                          onClick={() => handleShowModal(item)}
+                          disabled={item.status !== "Available"}
+                        >
                           Reserve
                           <AccessibilityRoundedIcon />
                         </Button>
